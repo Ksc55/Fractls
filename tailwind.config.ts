@@ -16,6 +16,16 @@ const config: Config = {
       colors: {
         customGreen: {
           50: '#13EE00',
+        },
+        customBlue: {
+          50: '#3929EF',
+        },
+        customPurple: {
+          50: '#B000EE',
+          100: '#4C00EE'
+        },
+        customBlack: {
+          50: '#414141',
         }
       }
     }
