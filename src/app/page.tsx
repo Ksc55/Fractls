@@ -1,5 +1,5 @@
 export default function Home() {
-
+    const recentlyAdded = [{},{},{}]
   return (
     <main className="w-full">
         <section className='pt-24'>
@@ -23,17 +23,77 @@ export default function Home() {
             <span>.</span>
             <span className='text-customBlue-50'>Stake</span>
         </section>
-        <section className={'flex  text-customBlack-50 font-bold mt-10 justify-center text-lg'}>
+        <section className={'flex  text-customBlack-50 font-bold h-40 justify-center text-lg'}>
             <p className={'text-center w-2/5'}>
             Enjoy <span className={'text-customPurple-100'}>Puzzle Like Gaming</span> Experience To collect <span className={'text-customPurple-100'}>Fractionalized NFTs & Reconstruct the Complete NFT</span> ART
             </p>
         </section>
-        <section className={'flex justify-center h-56 pt-48 gap-28'}>
-            <img src={'/action1.png'} className={' w-28 self-start'} alt={'Divide & Conquer'}/>
-            <img src={'/action2.png'} className={' w-28 self-end'} alt={'Rebuild & Reward'}/>
-            <img src={'/action3.png'} className={' w-28 self-start'} alt={'Swap & Profit'}/>
-            <img src={'/action4.png'} className={' w-28 self-end'} alt={'Pool & Earn'}/>
+        <section className={'flex justify-center h-56 h-96 gap-28'}>
+            <div className={' w-28 self-end'}>
+                <img src={'/action1.png'}  alt={'Divide & Conquer'}/>
+                <p>Divide & Conquer</p>
+            </div>
+            <div className={' w-28 self-start'}>
+                <img src={'/action3.png'}  alt={'Rebuild & Reward'}/>
+                <p>Rebuild & Reward</p>
+            </div>
+            <div className={' w-28 self-end'}>
+                <img src={'/action2.png'} alt={'Swap & Profit'}/>
+                <p>Swap & Profit</p>
+            </div>
+            <div className={' w-28 self-start'}>
+                <img src={'/action4.png'} alt={'Pool & Earn'}/>
+                <p>Pool & Earn</p>
+            </div>
         </section>
+        <section className={'bg-customGray-50 mt-20'}>
+          <h3 className={'text-center font-semibold text-4xl p-4'}>Recently Reconstructed NFTs </h3>
+            <div className={'flex justify-center gap-14'}>
+                {   recentlyAdded.map( _nft =>
+                        <div className="grid grid-rows-3 grid-flow-col gap-4">
+                            <div className="row-span-2 col-span-4 bg-customGreen-50">
+                                <img src={'/image-19.png'} className={'max-w-xs max-h-xs'} alt={'nft'}/>
+                            </div>
+                            <div className="row-span-1 col-span-2 flex flex-col">
+                                <span>Owner</span>
+                                <span>CoolDeep</span>
+                            </div>
+                            <div className="row-span-1 col-span-2 flex justify-center">
+                                <button
+                                    className={'rounded-full border-primary  border-2 px-4 h-10 font-light border-black bg-customGray-100'}>View
+                                    details
+                                </button>
+                            </div>
+                        </div>
+                    )
+                }
+            </div>
+        </section>
+        <div className={'flex justify-center mt-10 mb-10'}>
+            <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
+                View More NFT’s
+            </button>
+        </div>
+
+        <section className={'flex justify-center gap-14'}>
+            <div className={''}>
+                <img className={'max-w-xs max-h-xs'} src={'/stake.png'}  alt={'Stake'}/>
+                <p>Stake</p>
+            </div>
+            <div className={''}>
+                <img className={'max-w-xs max-h-xs'} src={'/borrow.png'}  alt={'borrow'}/>
+                <p>Borrow</p>
+            </div>
+            <div className={''}>
+                <img className={'max-w-xs max-h-xs'} src={'/liquidate.png'}  alt={'liquidate'}/>
+                <p>Liquidate</p>
+            </div>
+        </section>
+        <div className={'flex justify-center mt-10'}>
+            <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
+                Explore
+            </button>
+        </div>
     </main>
   )
 }

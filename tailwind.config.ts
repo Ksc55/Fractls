@@ -26,7 +26,11 @@ const config: Config = {
         },
         customBlack: {
           50: '#414141',
-        }
+        },
+        customGray: {
+            50: '#E4E4E4',
+            100: '#F5F5F5',
+        },
       }
     }
   },
