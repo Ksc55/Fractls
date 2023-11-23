@@ -1,6 +1,7 @@
 'use client'
 import WalletButton from "./WalletButton";
 import {usePathname} from "next/navigation";
+import Image from "next/image";
 
 export default function Header() {
     const pathname = usePathname()
@@ -19,7 +20,8 @@ export default function Header() {
 
     return (
         <header className="flex justify-between w-full items-center">
-            <img src="/fractis-logo.png" alt="logo"/>
+            <Image src="/fractis-logo.png" alt="logo" width={200} height={100}/>
+
             <nav className={'h-4'}>
                 <ul className="flex space-x-6 ">
                     {sectionsWithURL.map((section, index) => (

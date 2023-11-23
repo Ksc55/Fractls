@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Home() {
     const recentlyAdded = [{},{},{}]
   return (
@@ -30,19 +32,19 @@ export default function Home() {
         </section>
         <section className={'flex justify-center h-56 h-96 gap-28'}>
             <div className={' w-28 self-end'}>
-                <img src={'/action1.png'}  alt={'Divide & Conquer'}/>
+                <Image src={'/action1.png'}  alt={'Divide & Conquer'} width={100} height={100} layout={'responsive'}/>
                 <p>Divide & Conquer</p>
             </div>
             <div className={' w-28 self-start'}>
-                <img src={'/action3.png'}  alt={'Rebuild & Reward'}/>
+                <Image src={'/action3.png'}  alt={'Rebuild & Reward'} width={100} height={100} layout={'responsive'}/>
                 <p>Rebuild & Reward</p>
             </div>
             <div className={' w-28 self-end'}>
-                <img src={'/action2.png'} alt={'Swap & Profit'}/>
+                <Image src={'/action2.png'} alt={'Swap & Profit'} width={100} height={100} layout={'responsive'}/>
                 <p>Swap & Profit</p>
             </div>
             <div className={' w-28 self-start'}>
-                <img src={'/action4.png'} alt={'Pool & Earn'}/>
+                <Image src={'/action4.png'} alt={'Pool & Earn'} width={100} height={100} layout={'responsive'}/>
                 <p>Pool & Earn</p>
             </div>
         </section>
@@ -52,7 +54,7 @@ export default function Home() {
                 {   recentlyAdded.map( _nft =>
                         <div className="grid grid-rows-3 grid-flow-col gap-4">
                             <div className="row-span-2 col-span-4 bg-customGreen-50">
-                                <img src={'/image-19.png'} className={'max-w-xs max-h-xs'} alt={'nft'}/>
+                                <Image width={100} height={100} layout={'responsive'} src={'/image-19.png'} className={'max-w-xs max-h-xs'} alt={'nft'}/>
                             </div>
                             <div className="row-span-1 col-span-2 flex flex-col">
                                 <span>Owner</span>
@@ -77,15 +79,15 @@ export default function Home() {
 
         <section className={'flex justify-center gap-14'}>
             <div className={''}>
-                <img className={'max-w-xs max-h-xs'} src={'/stake.png'}  alt={'Stake'}/>
+                <Image width={100} height={100} layout={'responsive'} className={'max-w-xs max-h-xs'} src={'/stake.png'}  alt={'Stake'}/>
                 <p>Stake</p>
             </div>
             <div className={''}>
-                <img className={'max-w-xs max-h-xs'} src={'/borrow.png'}  alt={'borrow'}/>
+                <Image width={100} height={100} layout={'responsive'} className={'max-w-xs max-h-xs'} src={'/borrow.png'}  alt={'borrow'}/>
                 <p>Borrow</p>
             </div>
             <div className={''}>
-                <img className={'max-w-xs max-h-xs'} src={'/liquidate.png'}  alt={'liquidate'}/>
+                <Image width={100} height={100} layout={'responsive'} className={'max-w-xs max-h-xs'} src={'/liquidate.png'}  alt={'liquidate'}/>
                 <p>Liquidate</p>
             </div>
         </section>
