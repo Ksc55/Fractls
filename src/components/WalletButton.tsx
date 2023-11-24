@@ -4,7 +4,6 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 
 export default function WalletButton() {
         const { address, isConnected } = useAccount()
-    console.log(address)
         const { connect } = useConnect({
             connector: new InjectedConnector(),
         })

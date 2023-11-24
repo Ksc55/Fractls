@@ -1,13 +1,17 @@
-// components/FractionatedNTFFields.tsx
 import React, { useState, useEffect } from 'react';
 import StyledInput from "@/components/InputField";
 import NextImage from "next/image";
 
+export interface Shard {
+    image: string;
+    value: string;
+}
 interface FractionatedNTFFieldsProps {
-    image: string; // URL de la imagen
+    image: string;
+    setValue: (value: Shard[]) => void;
 }
 
-const FractionatedNTFFields: React.FC<FractionatedNTFFieldsProps> = ({ image }) => {
+const FractionatedNTFFields: React.FC<FractionatedNTFFieldsProps> = ({ image , setValue}) => {
     const [shards, setShards] = useState<string[]>([]);
     const [values, setValues] = useState<string[]>(Array.from({ length: 9 }, () => ''));
 
@@ -15,9 +19,9 @@ const FractionatedNTFFields: React.FC<FractionatedNTFFieldsProps> = ({ image }) 
         const newValues = [...values];
         newValues[index] = value;
         setValues(newValues);
+        setValue(newValues.map((value, index) => ({ image: shards[index], value })));
     };
 
-    // Función para fraccionar la imagen en 9 partes
     const fractionateImage = () => {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
@@ -27,7 +31,6 @@ const FractionatedNTFFields: React.FC<FractionatedNTFFieldsProps> = ({ image }) 
             return;
         }
 
-        // Cargar la imagen en el canvas
         const img = new Image();
         img.src = image;
 
@@ -36,13 +39,11 @@ const FractionatedNTFFields: React.FC<FractionatedNTFFieldsProps> = ({ image }) 
             canvas.height = img.height;
             context.drawImage(img, 0, 0, img.width, img.height);
 
-            // Calcular dimensiones de las partes
             const shardWidth = img.width / 3;
             const shardHeight = img.height / 3;
 
             const newShards: string[] = [];
 
-            // Fraccionar la imagen en 9 partes
             for (let row = 0; row < 3; row++) {
                 for (let col = 0; col < 3; col++) {
                     const shardCanvas = document.createElement('canvas');
@@ -68,7 +69,6 @@ const FractionatedNTFFields: React.FC<FractionatedNTFFieldsProps> = ({ image }) 
                         shardHeight
                     );
 
-                    // Convertir la parte a base64 y agregarla al array
                     newShards.push(shardCanvas.toDataURL('image/png'));
                 }
             }
