@@ -15,7 +15,10 @@ export default function Header() {
     ];
 
     const isActivePath = (url: string) => {
-        return url.includes(pathname)
+        if(url !== '/') {
+            return pathname.includes(url)
+        }
+        return pathname === url
     }
 
     return (
