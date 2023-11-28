@@ -13,8 +13,8 @@ export default function Page(props) {
             <section className={'w-100  bg-[#d9d9d9]  h-3/6 flex justify-center items center'}>
                 <Image src={'/image-19.png'}  width={600} height={600} className={'p-4'} />
             </section>
-            <section className={'flex  w-full mt-6'}>
-                <div className={'w-3/6'}>
+            <section className={'flex justify-between w-full mt-6'}>
+                <div>
                     <h3 className="text-black font-['Roboto'] text-[3.5rem] leading-[normal]">{name}</h3>
                     <div className={'grid grid-cols-2 gap-1'}>
                         <span className="text-black/[.70] font-['Roboto'] text-[.9375rem] leading-[normal]">Created By</span>
@@ -33,8 +33,8 @@ export default function Page(props) {
                             links.map(({icon, text, url}) => (
                                 <div className={'flex justify-between items-center'}>
                                     <div className={'flex justify-between items-center'}>
-                                        <Image src={`/${icon}.png`}  width={20} height={20} className={'p-4'} />
-                                        <a href={url} className="text-black font-['Roboto'] text-2xl leading-[normal]">{text}</a>
+                                        <Image src={`/${icon}.png`}  width={70} height={70} className={'p-4'} />
+                                        <a href={url} className="text-black font-['Roboto'] text-2xl leading-[normal] cursor-pointer">{text}</a>
                                     </div>
                                 </div>
                             ))
@@ -42,7 +42,7 @@ export default function Page(props) {
                     </div>
                 </div>
                 <div>
-                    <div className=" w-[475px] h-16 rounded-[0.875rem] border border-black bg-white mt-4 flex justify-between items-center">
+                    <div className=" w-[475px] h-16 rounded-[0.875rem] border border-black bg-white mt-4 flex justify-between items-center px-2">
                         <span className="text-black font-['Roboto'] text-2xl leading-[normal] mx-4">Price</span>
                         <button className="flex-shrink-0 w-[7.1875rem] h-10 rounded-full bg-customGreen-50">
                             Buy

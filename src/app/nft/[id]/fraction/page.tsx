@@ -7,8 +7,8 @@ export default function Page() {
             <section className={'w-100  bg-[#d9d9d9]  h-3/6 flex justify-center items center'}>
                 <Image src={'/image-19.png'}  width={600} height={600} className={'p-4'} />
             </section>
-            <section className={'flex  w-full mt-6'}>
-                <div className={'w-3/6'}>
+            <section className={'flex justify-between w-full mt-6'}>
+                <div>
                     <div className={'grid grid-cols-1 gap-1'}>
                         <span className="text-black/[.70] font-['Roboto'] text-[.9375rem] leading-[normal]">Owned By</span>
                         <span className="text-black font-['Roboto'] text-2xl leading-[normal]">@Collector</span>
