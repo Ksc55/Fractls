@@ -20,24 +20,24 @@ export default function Page() {
                                         <div className="group-11">
                                             <div className="frame-9">
                                                 <div className="text-wrapper-12">Filter by APR</div>
-                                                <img className="img-2" src="img/arrow-down-6.svg"/>
+                                                <img className="img-2" src="/arrow-down-6.svg"/>
                                             </div>
                                             <div className="frame-10">
                                                 <div className="text-wrapper-12">Filter by Volume</div>
-                                                <img className="img-2" src="img/arrow-down-6.svg"/>
+                                                <img className="img-2" src="/arrow-down-6.svg"/>
                                             </div>
                                             <div className="frame-11">
                                                 <div className="text-wrapper-12">Filter by Lock Period</div>
-                                                <img className="img-2" src="img/arrow-down-4.svg"/>
+                                                <img className="img-2" src="/arrow-down-4.svg"/>
                                             </div>
                                             <div className="frame-12">
                                                 <div className="text-wrapper-12">Filter by Date</div>
-                                                <img className="img-2" src="img/arrow-down-4.svg"/>
+                                                <img className="img-2" src="/arrow-down-4.svg"/>
                                             </div>
                                         </div>
                                         <div className="frame-13">
                                             <div className="text-wrapper-12">Search Pool</div>
-                                            <img className="img-2" src="img/arrow-right.svg"/>
+                                            <img className="img-2" src="/arrow-right.svg"/>
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@ export default function Page() {
                                             <div className="group-13">
                                                 <a href="link_to_your_destination" className="text-wrapper-14">Learn How
                                                     It Works</a>
-                                                <img className="video-circle" src="img/video-circle.svg"/>
+                                                <img className="video-circle" src="/video-circle.svg"/>
                                             </div>
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@ export default function Page() {
                                     <div className="group-13">
                                         <a href="link_to_your_destination" className="text-wrapper-14">Learn How It
                                             Works</a>
-                                        <img className="video-circle" src="img/video-circle.svg"/>
+                                        <img className="video-circle" src="/video-circle.svg"/>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@ export default function Page() {
                                         <div className="text-wrapper-21">100</div>
                                         <div className="frame-23">
                                             <div className="text-wrapper-22">Matic</div>
-                                            <img className="img-2" src="img/arrow-down-3.svg"/>
+                                            <img className="img-2" src="/arrow-down-3.svg"/>
                                         </div>
                                     </div>
                                     <div className="text-wrapper-23">I want to stake</div>
@@ -235,7 +235,7 @@ export default function Page() {
                                     <div className="group-13">
                                         <a href="link_to_your_destination" className="text-wrapper-14">Learn How It
                                             Works</a>
-                                        <img className="video-circle" src="img/video-circle.svg"/>
+                                        <img className="video-circle" src="/video-circle.svg"/>
                                     </div>
                                 </div>
                             </div>
@@ -270,7 +270,7 @@ export default function Page() {
                                     <div className="text-wrapper-21">100</div>
                                     <div className="frame-39">
                                         <div className="text-wrapper-22">Matic</div>
-                                        <img className="img-2" src="img/arrow-down-1.svg"/>
+                                        <img className="img-2" src="/arrow-down-1.svg"/>
                                     </div>
                                 </div>
                                 <div className="text-wrapper-23">I want to stake</div>
@@ -279,7 +279,7 @@ export default function Page() {
                                 <div className="frame-22">
                                     <div className="frame-40">
                                         <div className="text-wrapper-22">ETH</div>
-                                        <img className="arrow-down" src="img/arrow-down-1.svg"/>
+                                        <img className="arrow-down" src="/arrow-down-1.svg"/>
                                     </div>
                                     <div className="text-wrapper-21">100</div>
                                 </div>
@@ -321,11 +321,11 @@ export default function Page() {
                     <p className="text-wrapper-50">
                         This helps you decide the trades you would participate in and plan your asset allocation.
                     </p>
-                    <img className="image-2" src="img/image-31.png"/>
+                    <img className="image-2" src="/image-31.png"/>
                 </div>
                 <div className="frame-42">
                     <div className="text-wrapper-51">Home</div>
-                    <img className="arrow-left-2" src="img/arrow-left.svg"/>
+                    <img className="arrow-left-2" src="/arrow-left.svg"/>
                     <div className="text-wrapper-51">Liquidity Pool</div>
                 </div>
             </div>
