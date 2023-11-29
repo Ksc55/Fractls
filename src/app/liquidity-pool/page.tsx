@@ -1,3 +1,6 @@
+import {PoolCard} from "@/components/PoolCard";
+import StakeNFTCard from "@/components/StakeNFTCard";
+
 export default function Page() {
     return (
         <div className="liquidity-pool">
@@ -8,124 +11,7 @@ export default function Page() {
                             <div className="div-wrapper">
                                 <div className="frame-3">
                                     <div className="frame-4">
-                                        <div className="group-4">
-                                            <div className="group-wrapper">
-                                                <div className="group-5">
-                                                    <div className="group-6">
-                                                        <div className="overlap-group-wrapper">
-                                                            <div className="overlap-group-2">
-                                                                <div className="usdc-wrapper"><img className="usdc"
-                                                                                               src="img/usdc-3.svg"/>
-                                                                </div>
-                                                                <div className="img-wrapper"><img className="group-7"
-                                                                                              src="img/group.png"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="text-wrapper-6">ETH/USDC</div>
-                                                    </div>
-                                                    <div className="group-8">
-                                                        <div className="text-wrapper-7">APR</div>
-                                                        <div className="text-wrapper-8">19.76%</div>
-                                                    </div>
-                                                    <div className="group-9">
-                                                        <div className="view-details">
-                                                            <div className="text-wrapper-9">View Details</div>
-                                                        </div>
-                                                        <div className="add-liquidity">
-                                                            <div className="text-wrapper-10">Add Liquidity</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="frame-5">
-                                                <div className="group-5">
-                                                    <div className="group-6">
-                                                        <div className="overlap-group-wrapper">
-                                                            <div className="overlap-group-2">
-                                                                <div className="usdc-wrapper"><img className="usdc"
-                                                                                               src="img/usdc-2.svg"/>
-                                                                </div>
-                                                                <div className="img-wrapper"><img className="group-7"
-                                                                                              src="img/group.png"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="text-wrapper-6">ETH/USDC</div>
-                                                    </div>
-                                                    <div className="group-8">
-                                                        <div className="text-wrapper-7">APR</div>
-                                                        <div className="text-wrapper-8">19.76%</div>
-                                                    </div>
-                                                    <div className="group-9">
-                                                        <div className="view-details">
-                                                            <div className="text-wrapper-9">View Details</div>
-                                                        </div>
-                                                        <div className="add-liquidity">
-                                                            <div className="text-wrapper-10">Add Liquidity</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="frame-6">
-                                                <div className="group-5">
-                                                    <div className="group-6">
-                                                        <div className="overlap-group-wrapper">
-                                                            <div className="overlap-group-2">
-                                                                <div className="usdc-wrapper"><img className="usdc"
-                                                                                               src="img/usdc-1.svg"/>
-                                                                </div>
-                                                                <div className="img-wrapper"><img className="group-7"
-                                                                                              src="img/group.png"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="text-wrapper-6">ETH/USDC</div>
-                                                    </div>
-                                                    <div className="group-8">
-                                                        <div className="text-wrapper-7">APR</div>
-                                                        <div className="text-wrapper-8">19.76%</div>
-                                                    </div>
-                                                    <div className="group-9">
-                                                        <div className="view-details">
-                                                            <div className="text-wrapper-9">View Details</div>
-                                                        </div>
-                                                        <div className="add-liquidity">
-                                                            <div className="text-wrapper-10">Add Liquidity</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="frame-7">
-                                                <div className="group-5">
-                                                    <div className="group-6">
-                                                        <div className="overlap-group-wrapper">
-                                                            <div className="overlap-group-2">
-                                                                <div className="usdc-wrapper"><img className="usdc"
-                                                                                               src="img/usdc.svg"/>
-                                                                </div>
-                                                                <div className="img-wrapper"><img className="group-7"
-                                                                                              src="img/group.png"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="text-wrapper-6">ETH/USDC</div>
-                                                    </div>
-                                                    <div className="group-8">
-                                                        <div className="text-wrapper-7">APR</div>
-                                                        <div className="text-wrapper-8">19.76%</div>
-                                                    </div>
-                                                    <div className="group-9">
-                                                        <div className="view-details">
-                                                            <div className="text-wrapper-9">View Details</div>
-                                                        </div>
-                                                        <div className="add-liquidity">
-                                                            <div className="text-wrapper-10">Add Liquidity</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <PoolCard/>
                                         <a href="your_link_destination" className="frame-8">
                                             <div className="text-wrapper-11">View More Pools</div>
                                         </a>
@@ -327,39 +213,7 @@ export default function Page() {
                 <div className="frame-29">
                     <div className="frame-30">
                         <div className="group-41">
-                            <div className="NF-ts">
-                                <div className="frame-31">
-                                    <div className="expected-yield">Expected Yield&nbsp;&nbsp;5%</div>
-                                    <div className="text-wrapper-40">Curated By</div>
-                                    <div className="text-wrapper-41">CoolDeep</div>
-                                    <a href="your_link_destination" className="frame-32">
-                                        <div className="text-wrapper-42">Stake</div>
-                                    </a>
-                                    <div className="image-wrapper"><img className="image" src="img/image-19.png"/></div>
-                                </div>
-                            </div>
-                            <div className="NF-ts-2">
-                                <div className="frame-31">
-                                    <div className="expected-yield">Expected Yield&nbsp;&nbsp;5%</div>
-                                    <div className="text-wrapper-40">Curated By</div>
-                                    <div className="text-wrapper-41">CoolDeep</div>
-                                    <a href="your_link_destination" className="frame-32">
-                                        <div className="text-wrapper-42">Stake</div>
-                                    </a>
-                                    <div className="image-wrapper"><img className="image" src="img/image-19.png"/></div>
-                                </div>
-                            </div>
-                            <div className="NF-ts-3">
-                                <div className="frame-31">
-                                    <div className="expected-yield">Expected Yield&nbsp;&nbsp;5%</div>
-                                    <div className="text-wrapper-40">Curated By</div>
-                                    <div className="text-wrapper-41">CoolDeep</div>
-                                    <a href="your_link_destination" className="frame-32">
-                                        <div className="text-wrapper-42">Stake</div>
-                                    </a>
-                                    <div className="image-wrapper"><img className="image" src="img/image-19.png"/></div>
-                                </div>
-                            </div>
+                            <StakeNFTCard/>
                         </div>
                         <a href="your_link_destination" className="frame-33">
                             <div className="text-wrapper-11">View More NFT’s</div>
@@ -468,8 +322,6 @@ export default function Page() {
                         This helps you decide the trades you would participate in and plan your asset allocation.
                     </p>
                     <img className="image-2" src="img/image-31.png"/>
-                    <img className="arrow-left" src="img/arrow-left-1.svg"/>
-                    <img className="arrow-down-2" src="img/arrow-down.svg"/>
                 </div>
                 <div className="frame-42">
                     <div className="text-wrapper-51">Home</div>
