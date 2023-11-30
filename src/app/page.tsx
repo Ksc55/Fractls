@@ -14,9 +14,11 @@ export default function Home() {
                     <b> anonymously</b> list your NFT’s & Stake into pools for epic rewards while having fun playing puzzle games.
                 </span>
             </div>
-            <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
-                Start Trading
-            </button>
+            <a href={'/marketplace'}>
+                <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
+                    Start Trading
+                </button>
+            </a>
         </section>
         <section className="flex justify-center text-7xl font-semibold space-x-6">
             <span className='text-customPurple-50'>Mint</span>
