@@ -12,6 +12,8 @@ const port = process.env.PORT || 3000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+app.use(express.json());
+
 app.post(
   "/upload-and-store-metadata",
   upload.single("image"),
@@ -23,14 +25,20 @@ app.post(
           .json({ success: false, message: "No file uploaded" });
       }
 
+      const { name, description, attributes } = req.body;
+
       const imageBuffer = req.file.buffer;
 
-      const puzzlePiecesMetadata = await storePuzzleAsset(imageBuffer);
+      const data = await storePuzzleAsset(imageBuffer, {
+        name,
+        description,
+        attributes,
+      });
 
       return res.status(200).json({
         success: true,
         message: "File uploaded and metadata stored successfully",
-        puzzlePiecesMetadata: puzzlePiecesMetadata,
+        data: data,
       });
     } catch (error) {
       console.error(error);
@@ -45,8 +53,7 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-// The function to store puzzle assets with the provided image buffer
-async function storePuzzleAsset(imageBuffer) {
+async function storePuzzleAsset(imageBuffer, metadata) {
   try {
     const client = new NFTStorage({ token: process.env.NFT_STORAGE_API_KEY });
 
@@ -55,16 +62,20 @@ async function storePuzzleAsset(imageBuffer) {
     const ctx = canvas.getContext("2d");
     ctx.drawImage(image, 0, 0, image.width, image.height);
 
+    // Constants for puzzle piece dimensions
     const pieceWidth = image.width / 3;
     const pieceHeight = image.height / 3;
 
     const puzzlePiecesMetadata = [];
 
+    // Loop through puzzle pieces
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 3; col++) {
+        // Create a canvas for each puzzle piece
         const pieceCanvas = createCanvas(pieceWidth, pieceHeight);
         const pieceCtx = pieceCanvas.getContext("2d");
 
+        // Draw the puzzle piece on the canvas
         pieceCtx.drawImage(
           canvas,
           col * pieceWidth,
@@ -77,37 +88,38 @@ async function storePuzzleAsset(imageBuffer) {
           pieceHeight
         );
 
-        const metadata = await client.store({
-          name: `Piece${row * 3 + col + 1}`,
-          description: `Piece ${row * 3 + col + 1} of 9 for PuzzleNFT`,
-          image: new File(
-            [pieceCanvas.toBuffer("image/png")],
-            `piece${row * 3 + col + 1}.png`,
-            {
-              type: "image/png",
-            }
-          ),
+        // Convert puzzle piece to buffer
+        const pieceBuffer = pieceCanvas.toBuffer("image/png");
+
+        // Store puzzle piece metadata
+        const pieceMetadata = await client.store({
+          ...metadata,
+          name: `${metadata.name} - Piece ${row * 3 + col + 1}`,
+          description: `${metadata.description} - Piece ${row * 3 + col + 1}`,
+          image: new File([pieceBuffer], `piece${row * 3 + col + 1}.png`, {
+            type: "image/png",
+          }),
         });
 
-        puzzlePiecesMetadata.push(metadata);
+        puzzlePiecesMetadata.push(pieceMetadata);
       }
     }
 
+    // Create metadata for the original image
     const originalImageMetadata = {
-      name: "Fractal NFT",
-      description: "A puzzle NFT created from a single image",
-      image: new File([imageBuffer], "PuzzleNFT.png", { type: "image/png" }),
+      name: `${metadata.name} - Original`,
+      description: `${metadata.description} - Original`,
+      image: new File([imageBuffer], "original.png", { type: "image/png" }),
+      attributes: metadata.attributes,
       metadata: {
-        name: "PuzzleNFT",
-        description: "A puzzle NFT created from a single image",
         url: "",
         pieces: puzzlePiecesMetadata.map((piece) => piece.url),
       },
     };
 
+    // Store metadata for the original image
     const originalImage = await client.store(originalImageMetadata);
     originalImageMetadata.metadata.url = originalImage.url;
-    originalImage;
 
     return originalImageMetadata;
   } catch (error) {
