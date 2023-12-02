@@ -7,6 +7,9 @@ import { publicProvider } from 'wagmi/providers/public'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import {polygonMumbai} from "viem/chains";
 import {NextUIProvider} from "@nextui-org/system";
+import { QueryClientProvider } from '@tanstack/react-query'
+import {QueryClient} from "@tanstack/query-core";
+
 
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
@@ -22,12 +25,16 @@ const config = createConfig({
     publicClient,
     webSocketPublicClient
 })
+const queryClient = new QueryClient()
+
 export function Providers({ children }) {
     return (
         <WagmiConfig config={config}>
-            <NextUIProvider>
-                {children}
-            </NextUIProvider>
+            <QueryClientProvider client={queryClient}>
+                <NextUIProvider>
+                    {children}
+                </NextUIProvider>
+            </QueryClientProvider>
         </WagmiConfig>
     );
 }
