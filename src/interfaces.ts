@@ -8,3 +8,8 @@ export interface SelectedAsset {
     name: string;
     value: number;
 }
+
+export interface SocialLink {
+    name: string;
+    url: string;
+}

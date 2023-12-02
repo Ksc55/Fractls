@@ -6,6 +6,7 @@ import { publicProvider } from 'wagmi/providers/public'
 
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import {polygonMumbai} from "viem/chains";
+import {NextUIProvider} from "@nextui-org/system";
 
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
@@ -24,7 +25,9 @@ const config = createConfig({
 export function Providers({ children }) {
     return (
         <WagmiConfig config={config}>
-            {children}
+            <NextUIProvider>
+                {children}
+            </NextUIProvider>
         </WagmiConfig>
     );
 }

@@ -9,11 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.2.9",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-table": "^8.10.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "framer-motion": "^10.16.9",
     "lucide-react": "^0.293.0",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.2",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",
@@ -30,6 +34,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "postcss": "^8",
+    "prettier": "3.1.0",
     "tailwindcss": "^3.3.5",
     "typescript": "^5"
   }
