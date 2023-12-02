@@ -1,0 +1,8 @@
+{
+  "polygon-zkevm-testnet": {
+    "FractionToken": {
+      "address": "0xef7d564CfA15ea18B3761e807F27b6B299165A37",
+      "startBlock": 0
+    }
+  }
+}
