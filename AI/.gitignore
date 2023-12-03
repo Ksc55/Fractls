@@ -5,6 +5,7 @@ __pycache__/
 *.pyd
 
 # Virtual Environment
+myenv/
 venv/
 env/
 env.bak/
@@ -58,5 +59,6 @@ models/
 # Node 
 node_modules/
 package-lock.json
-myenv/
+
+# IMAGES FOR AI FRAUD DETECTION
 content/
