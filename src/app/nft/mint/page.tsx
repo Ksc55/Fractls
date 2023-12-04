@@ -3,44 +3,44 @@ import ImageUploader from "@/components/ImageUploader";
 import StyledInput from "@/components/InputField";
 import FractionatedNTFFields, {Shard} from "@/components/FractionatedNTFFields";
 import {useState} from "react";
-import {useContractWrite, usePrepareContractWrite} from "wagmi";
+import {useAccount, useContractRead, useContractWrite, usePrepareContractWrite} from "wagmi";
 import {Modal, ModalBody, ModalContent, ModalHeader} from "@nextui-org/modal";
 import {useDisclosure} from "@nextui-org/use-disclosure";
 import {useMutation} from "@tanstack/react-query";
+import NFTMarketplace from "../../../NFTMarketplace.json";
 
 interface formValues {
     name: string;
     description: string;
     shards: Shard[];
 }
-const saveToIpfs = async selectedImage => {
-    await fetch('/nft/upload', {
+const saveToIpfs = async ({image, name , description}) => {
+    const res = await fetch('/nft/upload', {
         method: 'POST',
-        body: JSON.stringify({image: selectedImage}),
+        body: JSON.stringify({image, name, description}),
     })
+    return await res.json()
 }
 export default function Page() {
+    const { address } = useAccount()
     const {mutateAsync, isLoading} = useMutation(saveToIpfs)
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
+    const [modal, setModal] = useState(false);
+    const { data, isError } = useContractRead({
+        address: '0x3fC2f8fC9B3421fa57ceF4D363456d00285FF17e',
+        abi: NFTMarketplace.abi,
+        functionName: 'getAllNFTs',
+    })
+    console.log(data)
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [form, setForm] = useState<formValues>({name: '', description: '', shards: []});
     const {name, description} = form;
-    const inValidFrom = !name || !description || form.shards.some(shard => !shard.value);
-    const { config } = usePrepareContractWrite({
-        address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-        abi: [
-            {
-                name: 'mint',
-                type: 'function',
-                stateMutability: 'nonpayable',
-                inputs: [],
-                outputs: [],
-            },
-        ],
-        functionName: 'mint',
+    const inValidFrom = !name || !description;
+    const { write, error } = useContractWrite({
+        address: '0x3fC2f8fC9B3421fa57ceF4D363456d00285FF17e',
+        abi: NFTMarketplace.abi,
+        functionName: 'createNFT'
     })
-    const { write } = useContractWrite(config)
     const onChangeField = (e: any) => {
         setForm({...form, [e.target.name]: e.target.value});
     }
@@ -48,17 +48,36 @@ export default function Page() {
         setForm({...form, shards});
     }
     const mintTokens = async () => {
-        mutateAsync(selectedImage)
-        //write()
+        setModal(true)
+        const response = await mutateAsync({image: selectedImage, name: form.name, description: form.description})
+        write({args: [response.tokenId, response.tokenURIs, response._ids]})
     };
+    if (address === undefined) {
+        return (<div className={'flex justify-center items-center h-screen'}>
+            <h1 className={'text-3xl font-bold'}>Welcome please connect wallet</h1>
+        </div>)
+    }
     return (
         <>
-            <Modal {...{isOpen: isLoading, onOpen, onOpenChange}} backdrop={'blur'} hideCloseButton>
+            <Modal {...{isOpen: modal, onOpen, onOpenChange}} backdrop={'blur'} hideCloseButton>
                 <ModalContent>
                     <ModalContent>
                         <ModalHeader>Minting NFT</ModalHeader>
                         <ModalBody>
-                            Your NFT is being minted. Please wait...
+                            {
+                                isLoading ? <p className="text-center text-2xl font-bold my-10">Minting NFT</p> :
+                                    <p className="text-center text-2xl font-bold my-10">Minted NFT</p>
+                            }
+                            {
+                                !isLoading && <div className="flex justify-center mt-10">
+                                    <a
+                                        href="/marketplace"
+                                        className={`bg-customGreen-50 rounded-full px-4 h-10 font-light w-1/6`}
+                                    >
+                                        Check on Marketplace
+                                    </a>
+                              </div>
+                            }
                         </ModalBody>
                     </ModalContent>
                 </ModalContent>
