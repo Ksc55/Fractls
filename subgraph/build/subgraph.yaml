@@ -1,0 +1,117 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: FractionToken
+    network: mumbai
+    source:
+      address: "0xef7d564CfA15ea18B3761e807F27b6B299165A37"
+      abi: FractionToken
+      startBlock: 43051494
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: FractionToken
+          file: FractionToken\abis\FractionToken.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: FractionToken\FractionToken.wasm
+  - kind: ethereum
+    name: NFTMarketplace
+    network: mumbai
+    source:
+      address: "0xBe1b3A0CC628666e7EeB07666191Ce4FBcA83B28"
+      abi: NFTMarketplace
+      startBlock: 43051523
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - NFTMarketplaceNFTCreated
+        - NFTMarketplacePartURIUpdated
+        - NFTMarketplaceWinnerRewarded
+      abis:
+        - name: NFTMarketplace
+          file: NFTMarketplace\abis\NFTMarketplace.json
+      eventHandlers:
+        - event: NFTCreated(uint256,uint256[],address)
+          handler: handleNFTCreated
+        - event: PartURIUpdated(uint256,uint256,string)
+          handler: handlePartURIUpdated
+        - event: WinnerRewarded(address,uint256)
+          handler: handleWinnerRewarded
+      file: NFTMarketplace\NFTMarketplace.wasm
+  - kind: ethereum
+    name: NFTContract
+    network: mumbai
+    source:
+      address: "0x33D9Df91b756360fCA9e2b030C1750cC5B55f221"
+      abi: NFTContract
+      startBlock: 43051400
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - NFTContractApproval
+        - ApprovalForAll
+        - BatchMetadataUpdate
+        - MetadataUpdate
+        - OwnershipTransferred
+        - NFTContractTransfer
+      abis:
+        - name: NFTContract
+          file: NFTContract\abis\NFTContract.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: BatchMetadataUpdate(uint256,uint256)
+          handler: handleBatchMetadataUpdate
+        - event: MetadataUpdate(uint256)
+          handler: handleMetadataUpdate
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: NFTContract\NFTContract.wasm
+  - kind: ethereum
+    name: VRF
+    network: mumbai
+    source:
+      address: "0x5c042e28d892087920bB5F08327626FF1dC4fB9a"
+      abi: VRF
+      startBlock: 43051400
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferRequested
+        - VRFOwnershipTransferred
+        - RequestFulfilled
+        - RequestSent
+      abis:
+        - name: VRF
+          file: VRF\abis\VRF.json
+      eventHandlers:
+        - event: OwnershipTransferRequested(indexed address,indexed address)
+          handler: handleOwnershipTransferRequested
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RequestFulfilled(uint256,uint256[])
+          handler: handleRequestFulfilled
+        - event: RequestSent(uint256,uint32)
+          handler: handleRequestSent
+      file: VRF\VRF.wasm
