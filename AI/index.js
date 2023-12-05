@@ -52,19 +52,19 @@ async function downloadAndConvertImageFromIPFS(cid, outputPath) {
 
 // Endpoint to trigger the Python script
 app.post("/run-similarity", async (req, res) => {
-  const { cid1, cid2, cid3 } = req.body;
+  const body = req.body;
   const pythonScriptPath = "similarity.py";
 
-  // Download and convert the images from IPFS to JPG
-  const rolls1Path = "./content/1.jpg";
-  await downloadAndConvertImageFromIPFS(cid1, rolls1Path);
+  // Loop through the request body properties dynamically
+  for (const key in body) {
+    if (Object.hasOwnProperty.call(body, key)) {
+      const cid = body[key];
 
-  const rolls2Path = "./content/2.jpg";
-  await downloadAndConvertImageFromIPFS(cid2, rolls2Path);
-
-  const superPath = "./content/super.jpg";
-  await downloadAndConvertImageFromIPFS(cid3, superPath);
-
+      // Download and convert images using unique paths dynamically
+      const imagePath = `./content/${key}.jpg`;
+      await downloadAndConvertImageFromIPFS(cid, imagePath);
+    }
+  }
   try {
     // Call the function to run the Python script
     const data = await runPythonScript(pythonScriptPath);
