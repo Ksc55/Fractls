@@ -5,7 +5,7 @@ export default function Page() {
     return (<>
         <div className="flex flex-col  h-screen">
             <section className={'w-100  bg-[#d9d9d9]  h-3/6 flex justify-center items center'}>
-                <Image src={'/image-19.png'}  width={600} height={600} className={'p-4'} />
+                <Image src={'/image-19.png'}  width={600} height={600} className={'p-4'} alt={'img'}/>
             </section>
             <section className={'flex justify-between w-full mt-6'}>
                 <div>
@@ -27,16 +27,16 @@ export default function Page() {
                 </div>
             </section>
             <div className={'flex justify-between items-center mt-20'}>
-                <Image src={'/back-arrow.svg'}  width={80} height={80} className={'p-4'} />
+                <Image alt={'tmp'} src={'/back-arrow.svg'}  width={80} height={80} className={'p-4'} />
                 <div className="text-[#121212] text-center font-['Roboto'] text-[2rem] font-semibold leading-[150%]">Similar F-NFTs</div>
-                <Image src={'/next-arrow.svg'}  width={80} height={80} className={'p-4'} />
+                <Image alt={'tmp'} src={'/next-arrow.svg'}  width={80} height={80} className={'p-4'} />
             </div>
             <div className={'flex justify-between items-center'}>
-                <Image src={'/image-19.png'}  width={250} height={250} />
-                <Image src={'/image-19.png'}  width={250} height={250} />
-                <Image src={'/image-19.png'}  width={250} height={250} />
-                <Image src={'/image-19.png'}  width={250} height={250} />
-                <Image src={'/image-19.png'}  width={250} height={250} />
+                <Image alt={'tmp'} src={'/image-19.png'}  width={250} height={250} />
+                <Image alt={'tmp'} src={'/image-19.png'}  width={250} height={250} />
+                <Image alt={'tmp'} src={'/image-19.png'}  width={250} height={250} />
+                <Image alt={'tmp'} src={'/image-19.png'}  width={250} height={250} />
+                <Image alt={'tmp'} src={'/image-19.png'}  width={250} height={250} />
 
             </div>
         </div>

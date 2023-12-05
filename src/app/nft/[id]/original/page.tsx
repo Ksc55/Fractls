@@ -11,7 +11,7 @@ export default function Page(props) {
     return (<>
         <div className="flex flex-col  h-screen">
             <section className={'w-100  bg-[#d9d9d9]  h-3/6 flex justify-center items center'}>
-                <Image src={'/image-19.png'}  width={600} height={600} className={'p-4'} />
+                <Image alt="tmp" src={'/image-19.png'}  width={600} height={600} className={'p-4'} />
             </section>
             <section className={'flex justify-between w-full mt-6'}>
                 <div>
@@ -33,7 +33,7 @@ export default function Page(props) {
                             links.map(({icon, text, url}) => (
                                 <div className={'flex justify-between items-center'}>
                                     <div className={'flex justify-between items-center'}>
-                                        <Image src={`/${icon}.png`}  width={70} height={70} className={'p-4'} />
+                                        <Image alt="tmp" src={`/${icon}.png`}  width={70} height={70} className={'p-4'} />
                                         <a href={url} className="text-black font-['Roboto'] text-2xl leading-[normal] cursor-pointer">{text}</a>
                                     </div>
                                 </div>
@@ -58,8 +58,11 @@ export default function Page(props) {
     </>)
 }
 
-
-const DetailHeader = ({field, children}) => (
+interface DetailHeaderProps {
+    field: string
+    children?: React.ReactNode
+}
+const DetailHeader: React.FC<DetailHeaderProps> = ({field, children}) => (
     <div className={'my-20'}>
         <div className="text-black font-['Roboto'] text-2xl leading-[normal]">{field}</div>
         <div className="w-[475.038px] h-px bg-black" />

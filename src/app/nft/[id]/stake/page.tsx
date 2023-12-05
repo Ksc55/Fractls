@@ -4,8 +4,8 @@ const Page = () => (<>
     <div className="flex  items-center pb-[3.4375rem] pl-[6.5625rem] pr-[4.125rem] p-14 h-[19.75rem] rounded bg-[#e4e4e4] justify-between">
         <div className="p-2 bg-slate-50">
             <div className={'flex flex-row justify-between'}>
-                <Image src={'/usdc.png'}  width={80} height={80} className={'border-2 rounded-full'}/>
-                <Image src={'/aave.png'}  width={80} height={80} className={'border-2 rounded-full'}/>
+                <Image alt={'tmp'} src={'/usdc.png'}  width={80} height={80} className={'border-2 rounded-full'}/>
+                <Image alt={'tmp'} src={'/aave.png'}  width={80} height={80} className={'border-2 rounded-full'}/>
             </div>
             <p>ETH/USDC</p>
             <div className={'flex justify-between'}>
