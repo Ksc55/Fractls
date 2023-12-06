@@ -16,7 +16,7 @@ export default function Page(props) {
     )
     const {data: metadata} = useQuery(
         {
-            queryKey: ['metadata', NFTData.url],
+            queryKey: ['metadata', props.params.id],
             queryFn: () => fetchIPFS(NFTData.url),
             enabled: !!NFTData,
         }

@@ -10,6 +10,9 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({ question: messages }),
     })
-    console.log(response)
+    if (!response.ok) {
+        return NextResponse.error()
+    }
+
     return NextResponse.json(await response.json())
 }

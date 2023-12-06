@@ -23,7 +23,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
     setIsMessageUpdating,
   } = useContext(MessagesContext);
 
-  const { mutate: sendMessage, isLoading } = useMutation({
+  const { mutateAsync: sendMessage, isLoading } = useMutation({
     mutationKey: ["sendMessage"],
     // include message to later use it in onMutate
     mutationFn: async (_message: Message) => {
@@ -34,46 +34,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
         },
         body: JSON.stringify({ messages: _message.text }),
       });
-
-      return response.body;
-    },
-    onMutate(message) {
-      addMessage(message);
-    },
-    onSuccess: async (stream) => {
-      if (!stream) throw new Error("No stream");
-
-      // construct new message to add
-      const id = nanoid();
-      const responseMessage: Message = {
-        id,
-        isUserMessage: false,
-        text: "",
-      };
-
-      // add new message to state
-      addMessage(responseMessage);
-
-      setIsMessageUpdating(true);
-
-      const reader = stream.getReader();
-      const decoder = new TextDecoder();
-      let done = false;
-
-      while (!done) {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-        const chunkValue = decoder.decode(value);
-        updateMessage(id, (prev) => prev + chunkValue);
-      }
-
-      // clean up
-      setIsMessageUpdating(false);
-      setInput("");
-
-      setTimeout(() => {
-        textareaRef.current?.focus();
-      }, 10);
+      return await response.json();
     },
     onError: (_, message) => {
       toast.error("Something went wrong. Please try again.");
@@ -87,7 +48,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
       <div className="relative flex-1 mt-4 overflow-hidden border-none rounded-lg outline-none">
         <TextareaAutosize
           ref={textareaRef}
-          onKeyDown={(e) => {
+          onKeyDown={async (e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
 
@@ -96,7 +57,13 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
                 isUserMessage: true,
                 text: input,
               };
-              sendMessage(message);
+              const newMsg = await sendMessage(message);
+              console.log(newMsg["Received message"])
+              addMessage({
+                id: 2,
+                isUserMessage: false,
+                text: newMsg["Received message"],
+              });
             }
           }}
           rows={2}
