@@ -27,12 +27,12 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
     mutationKey: ["sendMessage"],
     // include message to later use it in onMutate
     mutationFn: async (_message: Message) => {
-      const response = await fetch("/api/message", {
+      const response = await fetch(`/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ messages }),
+        body: JSON.stringify({ messages: _message.text }),
       });
 
       return response.body;
@@ -96,7 +96,6 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
                 isUserMessage: true,
                 text: input,
               };
-
               sendMessage(message);
             }
           }}
