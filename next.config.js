@@ -23,6 +23,14 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'gateway.ipfs.io'
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig
