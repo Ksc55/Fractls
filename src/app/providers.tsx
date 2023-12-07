@@ -34,7 +34,9 @@ export function Providers({ children }) {
   return (
     <WagmiConfig config={config}>
       <QueryClientProvider client={queryClient}>
-        <NextUIProvider>{children}</NextUIProvider>
+          <MessagesProvider client={queryClient}>
+            <NextUIProvider>{children}</NextUIProvider>
+          </MessagesProvider>
       </QueryClientProvider>
     </WagmiConfig>
   );

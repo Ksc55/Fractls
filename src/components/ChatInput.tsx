@@ -19,10 +19,11 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
     messages,
     addMessage,
     removeMessage,
-    updateMessage,
-    setIsMessageUpdating,
   } = useContext(MessagesContext);
 
+  console.log("messages", messages)
+  console.log("messages", messages)
+  console.log("messages", messages)
   const { mutateAsync: sendMessage, isLoading } = useMutation({
     mutationKey: ["sendMessage"],
     // include message to later use it in onMutate
@@ -57,13 +58,14 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
                 isUserMessage: true,
                 text: input,
               };
+              addMessage(message);
               const newMsg = await sendMessage(message);
-              console.log(newMsg["Received message"])
               addMessage({
-                id: 2,
+                id: nanoid(),
                 isUserMessage: false,
-                text: newMsg["Received message"],
+                text: newMsg["Received message"]
               });
+              setInput("");
             }
           }}
           rows={2}
