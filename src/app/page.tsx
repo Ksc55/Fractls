@@ -8,17 +8,21 @@ export default function Home() {
             <div className="text-8xl font-bold w-2/4">
                 Trade NFT’s As Shards
             </div>
-            <div className="flex justify-end text-right text-base">
+            <div className="flex justify-end text-right text-base relative pb-10">
                 <span className='w-60'>
                     We give a fair playground to all creators allowing you
                     <b> anonymously</b> list your NFT’s & Stake into pools for epic rewards while having fun playing puzzle games.
                 </span>
+                <a href={'/marketplace'} className={'absolute bottom-10 left-0'}>
+                    <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light '}>
+                        Start Trading
+                    </button>
+                </a>
             </div>
-            <a href={'/marketplace'}>
-                <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
-                    Start Trading
-                </button>
-            </a>
+
+        </section>
+        <section className={'flex justify-center  h-auto gap-28 pb-40'}>
+            <Image src={'/animated_nft.png'}  alt={'animated'} width={100} height={100} layout={'responsive'}/>
         </section>
         <section className="flex justify-center text-7xl font-semibold space-x-6">
             <span className='text-customPurple-50'>Mint</span>

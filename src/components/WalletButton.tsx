@@ -26,7 +26,7 @@ export default function WalletButton() {
         if (isConnected && mounted) {
             return (<div className={'flex items-center  gap-2'}>
                     <div>{ensName ? `${ensName} (${address})` : address.substring(0,5)}</div>
-                    <Image src={'/metaMask.png'} width={30} height={30}/>
+                    <Image src='/metaMask.png' width={30} height={30}/>
                     <button className={styleButton} onClick={() => disconnect()}>DISCONNECT</button>
             </div>)
         }
