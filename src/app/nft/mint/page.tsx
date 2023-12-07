@@ -36,7 +36,7 @@ export default function Page() {
     const [form, setForm] = useState<formValues>({name: '', description: '', shards: []});
     const {name, description} = form;
     const inValidFrom = !name || !description;
-    const { write, error } = useContractWrite({
+    const { data: transactionData, isLoading: loadingTransaction, isSuccess, write } = useContractWrite({
         address: process.env.NEXT_PUBLIC_CONTRACT,
         abi: NFTMarketplace.abi,
         functionName: 'createNFT'
@@ -65,14 +65,16 @@ export default function Page() {
                         <ModalHeader>Minting NFT</ModalHeader>
                         <ModalBody>
                             {
-                                isLoading ? <p className="text-center text-2xl font-bold my-10">Minting NFT</p> :
-                                    <p className="text-center text-2xl font-bold my-10">Minted NFT</p>
+                                isLoading && <p className="text-center text-2xl font-bold my-10">Storing your NFT</p>
                             }
                             {
-                                !isLoading && <div className="flex justify-center mt-10">
+                                loadingTransaction && <p className="text-center text-2xl font-bold my-10">Check your Wallet</p>
+                            }
+                            {
+                                isSuccess && <div className="flex justify-center mt-10">
                                     <a
                                         href="/marketplace"
-                                        className={`bg-customGreen-50 rounded-full px-4 h-10 font-light w-1/6`}
+                                        className={`bg-customGreen-50 rounded-full px-4 h-10 font-light w-full text-center `}
                                     >
                                         Check on Marketplace
                                     </a>
