@@ -5,6 +5,7 @@ import NFTMarketplace from "@/NFTMarketplace.json";
 import {useIsMounted} from "@/components/useIsMounted";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
+import {CircularProgress} from "@nextui-org/progress";
 
 function page() {
     const mounted = useIsMounted()
@@ -99,7 +100,7 @@ export const fetchIPFS = async (url) => {
 }
 
 const NFTFractionCard = ({nft, parentNFT}) => {
-    const {data: metadata} = useQuery(
+    const {data: metadata, isLoading} = useQuery(
         {
             queryKey: ['metadata', nft.result.url],
             queryFn: () => fetchIPFS(nft.result.url),
@@ -112,9 +113,11 @@ const NFTFractionCard = ({nft, parentNFT}) => {
             <Image src={url} width={200} height={200} className={'w-full'}/>
         </a>
     }
-    return <div
-        className="">
-        <Image src="https://gateway.ipfs.io/ipfs/bafybeihwetgkyyye2reyev7i7dzf37w3nd52pxwwzzqh56ew6ulktamtya/piece9.png"
-               width={300} height={200}/>
-    </div>
+    if (isLoading) {
+        return <div
+            className="">
+            <CircularProgress color="secondary" aria-label="Loading..."/>
+        </div>
+    }
+
 }
