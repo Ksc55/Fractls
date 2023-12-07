@@ -41,9 +41,9 @@ function page() {
     })
     return (
         <div
-            className="relative bg-whitesmoke w-full overflow-hidden flex flex-col items-start justify-end pt-[110px] px-40 pb-[572px] box-border gap-[28px] text-left text-sm text-gray font-roboto">
+            className="relative bg-whitesmoke w-full overflow-hidden flex flex-col items-start justify-end pt-10 pb-[572px] box-border gap-[28px] text-left text-sm text-gray font-roboto">
             <div
-                className="bg-gainsboro shadow-[0px_0px_5px_rgba(0,_0,_0,_0.4)_inset] w-full h-[50px] flex flex-col items-center justify-center">
+                className=" shadow-[0px_0px_5px_rgba(0,_0,_0,_0.4)_inset] w-full h-[50px] flex flex-col items-center justify-center bg-[#e0e0e0]">
                 <div className="w-full h-5 flex flex-row items-center justify-start gap-[14px] px-2">
                     <div
                         className="w-full h-5 flex flex-row items-center  justify-around">
@@ -51,7 +51,7 @@ function page() {
                             categories.map((category, index) => (
                                 <div
                                     key={index + 'category'}
-                                    className="rounded-135xl box-border  h-5 overflow-hidden shrink-0 flex flex-col items-center justify-center border-[1px] border-solid border-gray">
+                                    className="inline-flex justify-center items-center pr-[1.375rem] py-0 pl-6 rounded-full border border-[#121212] text-[#121212] font-['Roboto'] text-sm leading-[150%]">
                                     <div className="relative leading-[150%]">{category.name}</div>
                                 </div>
                             ))
@@ -61,7 +61,7 @@ function page() {
             </div>
             {
                 (!isLoading && mounted) &&
-              <div className="grid grid-cols-5 gap-4 w-full justify-center">
+              <div className="grid grid-cols-5 gap-10 w-full justify-center">
                   {
                       NFTFractions.map(_nft => {
                           const parentNFT = NFTList.find(nft => nft.partIds.includes(_nft.result.id)).tokenId;
@@ -108,13 +108,13 @@ const NFTFractionCard = ({nft, parentNFT}) => {
     if (metadata) {
         const url = `https://gateway.ipfs.io/ipfs/${metadata.image}${metadata.path}.png`
         return <a href={`/nft/${nft.result.id}/fraction?parent=${parentNFT}`}
-                  className="">
-            <Image src={url} width={100} height={100}/>
+                  className="border-2 border-slate-950">
+            <Image src={url} width={200} height={200} className={'w-full'}/>
         </a>
     }
     return <div
         className="">
         <Image src="https://gateway.ipfs.io/ipfs/bafybeihwetgkyyye2reyev7i7dzf37w3nd52pxwwzzqh56ew6ulktamtya/piece9.png"
-               width={100} height={100}/>
+               width={300} height={200}/>
     </div>
 }
