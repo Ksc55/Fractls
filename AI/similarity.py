@@ -74,32 +74,32 @@ def show_image(image_path):
   plt.close()
 
 # define the path of the images
-rolls1 = './content/1.jpg'
-rolls2 = './content/2.jpg'
+image1 = './content/1.jpg'
+image2 = './content/2.jpg'
 
 # use the show_image function to plot the images
-show_image(rolls1), show_image(rolls2)
+show_image(image1), show_image(image2)
 
-similarity_score = get_similarity_score(rolls1, rolls2)
+similarity_score = get_similarity_score(image1, image2)
 print(similarity_score)
 
 # # define the path of the images
 super = './content/super.jpg'
 
-show_image(rolls1), show_image(super)
+show_image(image1), show_image(super)
 
-similarity_score = get_similarity_score(rolls1, super)
+similarity_score = get_similarity_score(image1, super)
 
 print(similarity_score)
 
 # Delete the temporary image file
 os.remove('temp.png')
 
-
 # Workflow => 
 
 
 # TODO make a route in express to store the source image and the nft that have been already minted (Graqhql)
+
 # similarity page should be done 
 # on this page we need to show the fractionnal nft and in subsection we need to list all the similar nft
 # on a page similare nft should be listed 

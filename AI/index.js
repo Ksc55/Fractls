@@ -55,6 +55,9 @@ app.post("/run-similarity", async (req, res) => {
   const body = req.body;
   const pythonScriptPath = "similarity.py";
 
+  // That get the URI IPFS from graphQL enpoint
+
+  // Save them locally
   // Loop through the request body properties dynamically
   for (const key in body) {
     if (Object.hasOwnProperty.call(body, key)) {
