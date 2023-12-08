@@ -1,5 +1,4 @@
 import ssl
-
 ssl._create_default_https_context = ssl._create_unverified_context
 from flask import Flask, request, jsonify
 import os
@@ -7,6 +6,7 @@ import subprocess
 import requests
 from PIL import Image
 from io import BytesIO
+
 app = Flask(__name__)
 from similarity import get_similarity_score
 
@@ -39,6 +39,10 @@ def run_similarity():
     except Exception as e:
         print(f"Error running similarity script: {e}")
         return "Internal Server Error", 500
+    finally:
+        # Clean up the files after similarity calculation
+        for path in paths:
+            os.remove(path)
 
 if __name__ == '__main__':
     port = 3000
