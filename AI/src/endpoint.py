@@ -23,6 +23,7 @@ def download_and_convert_image_from_ipfs(cid, output_path):
     except Exception as e:
         print(f"Error downloading/convert image from IPFS: {e}")
 
+
 @app.route('/run-similarity', methods=['POST'])
 def run_similarity():
     data = request.get_json()
@@ -34,8 +35,17 @@ def run_similarity():
         images.append(download_and_convert_image_from_ipfs(cid, image_path))
 
     try:
-        result = get_similarity_score(paths[0], paths[1])
-        return jsonify(str(result[0])), 200
+        firstImage = paths[0]
+        arrayResults = []
+        for i in range(1, len(paths)):
+            secondImage = paths[i]
+            result = get_similarity_score(firstImage, secondImage)
+            arrayResults.append({
+                'path': secondImage,
+                'similarity_score': float(result[0])
+            })
+        return jsonify(arrayResults), 200
+       
     except Exception as e:
         print(f"Error running similarity script: {e}")
         return "Internal Server Error", 500
@@ -43,6 +53,8 @@ def run_similarity():
         # Clean up the files after similarity calculation
         for path in paths:
             os.remove(path)
+
+
 
 if __name__ == '__main__':
     port = 3000
