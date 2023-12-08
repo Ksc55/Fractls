@@ -27,8 +27,10 @@ export default function Page() {
         fetchProfileData(address).then(({data}) => {
             if (data === null) {
                 onOpen()
+            } else {
+                let links = (JSON.parse(data.links))
+                setProfile({...data, links})
             }
-            setProfile({...data, links: JSON.parse(JSON.parse(data.links))})
         });
     }, [address])
     if (address === undefined || profile === undefined || profile === null) {

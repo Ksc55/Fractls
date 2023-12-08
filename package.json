@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-table": "^8.10.7",
@@ -21,14 +23,18 @@
     "lucide-react": "^0.293.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.2",
+    "nanoid": "^5.0.4",
     "next": "14.0.3",
     "nft.storage": "^7.1.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
+    "uuid": "^9.0.1",
     "viem": "^1.19.8",
-    "wagmi": "^1.4.7"
+    "wagmi": "^1.4.7",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",

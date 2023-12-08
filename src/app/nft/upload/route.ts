@@ -2,6 +2,7 @@ import { NFTStorage, File } from "nft.storage";
 import dotenv from "dotenv";
 import { createCanvas, loadImage } from "canvas";
 import {NextResponse} from "next/server";
+import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
@@ -9,7 +10,8 @@ dotenv.config();
 const { NFT_STORAGE_API_KEY } = process.env;
 
 // Function to split an image into a 3x3 grid and store each piece as an NFT
-async function storePuzzleAsset(originalNFT: string) {
+
+async function storePuzzleAsset(originalNFT, name ,description) {
     try {
         if (!NFT_STORAGE_API_KEY) {
             throw new Error("NFT_STORAGE_API_KEY is not provided in the environment variables.");
@@ -74,8 +76,8 @@ async function storePuzzleAsset(originalNFT: string) {
         });
 
         const originalImageMetadata = {
-            name: "PuzzleNFT",
-            description: "A puzzle NFT created from a single image",
+            name,
+            description,
             image: new File([originalNFT], "PuzzleNFT.png", { type: "image/png" }),
             properties: {
                 pieces: puzzlePiecesMetadata.map((pieceMetadata) => pieceMetadata.url),
@@ -86,6 +88,10 @@ async function storePuzzleAsset(originalNFT: string) {
         const originalImage = await client.store(originalImageMetadata);
         console.log("Metadata stored on Filecoin and IPFS for original image:");
         console.log(originalImage.url);
+        return puzzlePiecesMetadata.map((metadata, index) => ({
+            url: metadata.url,
+            id: uuidv4().split('-').map(part => parseInt(part, 16)).join(''),
+        }));
     } catch (error) {
         // Handle any errors that may occur during the process
         console.error(error);
@@ -96,9 +102,15 @@ async function storePuzzleAsset(originalNFT: string) {
 
 
 export async function POST(request: Request) {
-    const {image} = await request.json()
-    return storePuzzleAsset(image).then(() => {
-        return NextResponse.json({status: 'Images uploaded successfully'})
+    const {image, name ,description} = await request.json()
+    return storePuzzleAsset(image, name ,description).then((response    ) => {
+        return NextResponse.json(
+            {
+                tokenId:  uuidv4().split('-').map(part => parseInt(part, 16)).join(''),
+                tokenURIs: response.map((item) => item.url),
+                _ids: response.map((item) => item.id),
+            }
+        )
     }).catch((error) => {
         return NextResponse.json({status: 'Error uploading images'})
     });

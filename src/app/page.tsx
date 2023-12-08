@@ -1,24 +1,31 @@
+'use client';
 import Image from "next/image";
+import {useContractRead} from "wagmi";
+import NFTMarketplace from "@/NFTMarketplace.json";
 
 export default function Home() {
-    const recentlyAdded = [{},{},{}]
-  return (
-    <main className="w-full">
-        <section className='pt-24'>
-            <div className="text-8xl font-bold w-2/4">
-                Trade NFT’s As Shards
-            </div>
-            <div className="flex justify-end text-right text-base">
-                <span className='w-60'>
+    const recentlyAdded = [{}, {}, {}]
+    return (
+        <main className="w-full">
+            <section className='pt-24'>
+                <div className="text-8xl font-bold w-2/4">
+                    Trade NFT’s As Shards
+                </div>
+                <div className="flex justify-end text-right text-base relative pb-10">
+                <span className='w-80 text-2xl	'>
                     We give a fair playground to all creators allowing you
                     <b> anonymously</b> list your NFT’s & Stake into pools for epic rewards while having fun playing puzzle games.
                 </span>
-            </div>
-            <a href={'/marketplace'}>
-                <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
-                    Start Trading
-                </button>
-            </a>
+                    <a href={'/marketplace'} className={'absolute bottom-10 left-0'}>
+                        <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light text-xl h-12'}>
+                            Start Trading
+                        </button>
+                    </a>
+                </div>
+
+        </section>
+        <section className={'flex justify-center  h-auto gap-28 pb-40'}>
+            <Image src={'/animated_nft.png'}  alt={'animated'} width={100} height={100} layout={'responsive'}/>
         </section>
         <section className="flex justify-center text-7xl font-semibold space-x-6">
             <span className='text-customPurple-50'>Mint</span>
@@ -79,25 +86,61 @@ export default function Home() {
             </button>
         </div>
 
-        <section className={'flex justify-center gap-14'}>
-            <div className={''}>
-                <Image width={100} height={100} layout={'responsive'} className={'max-w-xs max-h-xs'} src={'/stake.png'}  alt={'Stake'}/>
-                <p>Stake</p>
+            <section className={'flex justify-center gap-14'}>
+                <div className={''}>
+                    <Image width={100} height={100} layout={'responsive'} className={'max-w-xs max-h-xs'}
+                           src={'/stake.png'} alt={'Stake'}/>
+                    <p>Stake</p>
+                </div>
+                <div className={''}>
+                    <Image width={100} height={100} layout={'responsive'} className={'max-w-xs max-h-xs'}
+                           src={'/borrow.png'} alt={'borrow'}/>
+                    <p>Borrow</p>
+                </div>
+                <div className={''}>
+                    <Image width={100} height={100} layout={'responsive'} className={'max-w-xs max-h-xs'}
+                           src={'/liquidate.png'} alt={'liquidate'}/>
+                    <p>Liquidate</p>
+                </div>
+            </section>
+            <div className={'flex justify-center mt-10'}>
+                <a href={'/marketplace'} className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
+                    Explore
+                </a>
             </div>
-            <div className={''}>
-                <Image width={100} height={100} layout={'responsive'} className={'max-w-xs max-h-xs'} src={'/borrow.png'}  alt={'borrow'}/>
-                <p>Borrow</p>
-            </div>
-            <div className={''}>
-                <Image width={100} height={100} layout={'responsive'} className={'max-w-xs max-h-xs'} src={'/liquidate.png'}  alt={'liquidate'}/>
-                <p>Liquidate</p>
-            </div>
-        </section>
-        <div className={'flex justify-center mt-10'}>
-            <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
-                Explore
-            </button>
+        </main>
+    )
+}
+
+const RecentlyReconstructed = () => {
+    const {data: recentlyAdded = [], isLoading} = useContractRead({
+        address: process.env.NEXT_PUBLIC_CONTRACT,
+        abi: NFTMarketplace.abi,
+        functionName: 'getAllNFTs',
+    })
+    console.log(recentlyAdded)
+    if (recentlyAdded.length === 0 || isLoading) return (<></>)
+    return (<section className={'bg-customGray-50 mt-20'}>
+        <h3 className={'text-center font-semibold text-4xl p-4'}>Recently Reconstructed NFTs </h3>
+        <div className={'flex justify-center gap-14'}>
+            {recentlyAdded.slice(0, 3).map(_nft =>
+                <div className="grid grid-rows-3 grid-flow-col gap-4">
+                    <div className="row-span-2 col-span-4 bg-customGreen-50">
+                        <Image width={100} height={100} layout={'responsive'} src={'/image-19.png'}
+                               className={'max-w-xs max-h-xs'} alt={'nft'}/>
+                    </div>
+                    <div className="row-span-1 col-span-2 flex flex-col">
+                        <span>Owner</span>
+                        <span>CoolDeep</span>
+                    </div>
+                    <div className="row-span-1 col-span-2 flex justify-center">
+                        <button
+                            className={'rounded-full border-primary  border-2 px-4 h-10 font-light border-black bg-customGray-100'}>View
+                            details
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
-    </main>
-  )
+    </section>)
 }

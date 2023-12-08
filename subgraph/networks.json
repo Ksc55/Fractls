@@ -1,0 +1,17 @@
+{
+  "mumbai": {
+    "FractionToken": {
+      "address": "0xef7d564CfA15ea18B3761e807F27b6B299165A37",
+      "startBlock": 43051494
+    },
+    "NFTMarketplace": {
+      "address": "0xBe1b3A0CC628666e7EeB07666191Ce4FBcA83B28"
+    },
+    "NFTContract": {
+      "address": "0x33D9Df91b756360fCA9e2b030C1750cC5B55f221"
+    },
+    "VRF": {
+      "address": "0x5c042e28d892087920bB5F08327626FF1dC4fB9a"
+    }
+  }
+}
