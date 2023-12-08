@@ -62,3 +62,4 @@ package-lock.json
 
 # IMAGES FOR AI FRAUD DETECTION
 content/
+myenv/
