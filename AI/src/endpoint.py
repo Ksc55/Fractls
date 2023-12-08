@@ -22,6 +22,7 @@ def download_and_convert_image_from_ipfs(cid, output_path):
         return img
     except Exception as e:
         print(f"Error downloading/convert image from IPFS: {e}")
+        return None
 
 
 @app.route('/run-similarity', methods=['POST'])
@@ -39,11 +40,16 @@ def run_similarity():
         arrayResults = []
         for i in range(1, len(paths)):
             secondImage = paths[i]
+            if images[i] is None:
+                continue  # Skip similarity calculation if image doesn't exist
             result = get_similarity_score(firstImage, secondImage)
             arrayResults.append({
                 'path': secondImage,
                 'similarity_score': float(result[0])
             })
+            arrayResults.sort(key=lambda x: x['similarity_score'], reverse=True)
+                
+
         return jsonify(arrayResults), 200
        
     except Exception as e:
@@ -52,7 +58,8 @@ def run_similarity():
     finally:
         # Clean up the files after similarity calculation
         for path in paths:
-            os.remove(path)
+            if os.path.exists(path):
+                os.remove(path)
 
 
 
