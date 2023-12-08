@@ -36,5 +36,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# AI 
+AI/myenv
+
 # backend 
 /backend/node_modules

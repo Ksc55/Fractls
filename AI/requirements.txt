@@ -3,3 +3,5 @@ pillow
 tensorflow
 matplotlib
 scikit-learn
+flask
+jsonify
