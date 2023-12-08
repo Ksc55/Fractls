@@ -21,9 +21,6 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
     removeMessage,
   } = useContext(MessagesContext);
 
-  console.log("messages", messages)
-  console.log("messages", messages)
-  console.log("messages", messages)
   const { mutateAsync: sendMessage, isLoading } = useMutation({
     mutationKey: ["sendMessage"],
     // include message to later use it in onMutate

@@ -25,14 +25,14 @@ export default function RootLayout({
         <Providers>
           <div className="px-24 py-10">
             <Header />
-            <Breadcrumbs 
+{/*            <Breadcrumbs
               homeElement={'Home'}
               separator={<span> | </span>}
               activeClasses='text-customGray-50'
-              containerClasses='flex py-5' 
+              containerClasses='flex py-5'
               listClasses='hover:underline mx-2 font-bold'
               capitalizeLinks
-            />
+            />*/}
             {children}
           </div>
           <Chat />
