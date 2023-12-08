@@ -74,7 +74,6 @@ async function storePuzzleAsset(originalNFT: string) {
         });
 
         const originalImageMetadata = {
-            /// TODO - add the name and description for the original image
             name: "PuzzleNFT",
             description: "A puzzle NFT created from a single image",
             image: new File([originalNFT], "PuzzleNFT.png", { type: "image/png" }),
