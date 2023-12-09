@@ -145,6 +145,7 @@ const RandomNFTCard = ({ nft }) => {
           src={url}
           width={250}
           height={250}
+          style={{ maxHeight: "250px" }}
           className={"p-4"}
           alt={"img"}
         />
