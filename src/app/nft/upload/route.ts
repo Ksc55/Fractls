@@ -10,6 +10,7 @@ dotenv.config();
 const { NFT_STORAGE_API_KEY } = process.env;
 
 // Function to split an image into a 3x3 grid and store each piece as an NFT
+
 async function storePuzzleAsset(originalNFT, name ,description) {
     try {
         if (!NFT_STORAGE_API_KEY) {
@@ -97,7 +98,6 @@ async function storePuzzleAsset(originalNFT, name ,description) {
         throw error;
     }
 }
-
 
 
 
