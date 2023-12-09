@@ -77,7 +77,7 @@ function page() {
 
 export default page;
 
-function extractCID(ipfsUrl) {
+export function extractCID(ipfsUrl) {
     const regex = /ipfs:\/\/([a-zA-Z0-9]+)/;
     const match = ipfsUrl.match(regex);
 
