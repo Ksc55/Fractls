@@ -7,13 +7,33 @@ import {Asset, Asset} from "@/interfaces";
 import Slider from "@/components/Slider";
 import Image from "next/image";
 import CuratedNFTCard from "@/components/CuratedNFTCard";
+import {useLatestNFT} from "@/app/hooks";
+import {useContractRead, useContractReads} from "wagmi";
+import NFTContract from "@/app/abi/NFTContract.json";
 
-enum StakeSwitch {
+export enum StakeSwitch {
     STAKE = 0,
     UNSTAKE = 1
 }
 
 export default function Page() {
+    const {data: latestId, isError} = useContractRead({
+        address: process.env.NEXT_PUBLIC_NFT_CONTRACT,
+        abi: NFTContract.abi,
+        functionName: 'getCurrentTokenId',
+        args: [],
+    })
+    const latestIds: Array<number> = latestId === undefined ? [] : new Array(latestId).fill(0).map((_, i) => i )
+
+    const {data: originalNFTDetails} = useContractReads({
+        contracts: latestIds.map(id => ({
+            address: process.env.NEXT_PUBLIC_NFT_CONTRACT,
+            abi: NFTContract.abi,
+            functionName: 'tokenURI',
+            args: [id]
+        }))
+    })
+    console.log('originalNFTDetails', originalNFTDetails)
     return (
         <div className="liquidity-pool mt-20">
             <div className="div w-full">
@@ -59,7 +79,7 @@ export default function Page() {
                         </div>
                     </div>
                 </section>
-                <div className="flex justify-between my-5">
+                <div className="flex justify-around my-5">
                     {[1, 2, 3].map(_nft => <CuratedNFTCard/>)}
                 </div>
                 <div className="w-full flex justify-center items-center my-20">
@@ -256,7 +276,7 @@ export default function Page() {
     )
 }
 
-const assetsList: Asset[] = [
+export const assetsList: Asset[] = [
     {
         name: 'ETH',
         address: '0x123'
@@ -311,7 +331,7 @@ const StakeCard = () => {
 }
 
 
-enum SummarySwitch {
+export enum SummarySwitch {
     SUMMARY,
     ANALYTICS
 }
