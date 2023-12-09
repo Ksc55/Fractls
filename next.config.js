@@ -28,6 +28,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'gateway.ipfs.io'
+      },
+      {
+        protocol: 'https',
+        hostname: 'ipfs.nftstorage.link'
       }
     ]
   }
