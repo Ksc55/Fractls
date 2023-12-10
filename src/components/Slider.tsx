@@ -8,6 +8,7 @@ interface SliderProps {
 }
 
 const CustomSlider: FC<SliderProps> = ({ label, options, onValueChange, value, marks, step=7 , defaultValue=7, maxValue, minValue}) => {
+
     return (
         <Slider
             label={label}
@@ -19,6 +20,7 @@ const CustomSlider: FC<SliderProps> = ({ label, options, onValueChange, value, m
             step={step}
             maxValue={maxValue}
             minValue={minValue}
+            onChange={onValueChange}
         />
     );
 };
