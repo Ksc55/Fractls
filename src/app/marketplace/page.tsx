@@ -154,15 +154,14 @@ const CompletedNFTCard = ({ nft, index }) => {
           alt={metadata.name}
         />
         <p>{metadata.name}</p>
-        <div className={"flex"}></div>
-        <a
-          href={`/nft/${index}/original/`}
-          className={
-            "bg-customGreen-50 rounded-full px-4 h-10 font-light text-center align-center cursor-pointer"
-          }
-        >
-          Buy NFT
-        </a>
+        <div className="flex justify-center p-3">
+          <a
+            href={`/nft/${index}/original/`}
+            className="bg-customGreen-50 rounded-full px-4 h-10 flex items-center justify-center font-light cursor-pointer"
+          >
+            Buy NFT
+          </a>
+        </div>
       </div>
     );
   }
