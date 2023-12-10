@@ -19,10 +19,6 @@ import {useDisclosure} from "@nextui-org/use-disclosure";
 const Page = (props) => {
     const [stakeSwitch, setStakeSwitch] = useState<StakeSwitch>(StakeSwitch.STAKE);
     const [activeStakeButton, setActiveStakeButton] = useState(false);
-    const [duration, setDuration] = useState(0);
-    const onChangeDuration = (value) => {
-        setDuration(value);
-    }
     const {data: NFTData, isError} = useContractRead({
             address: process.env.NEXT_PUBLIC_NFT_CONTRACT,
             abi: NFTContract.abi,
@@ -30,14 +26,6 @@ const Page = (props) => {
             args: [props.params.id]
         }
     )
-    const {data: stakeInfo} = useContractRead({
-            address: process.env.NEXT_PUBLIC_STAKING_CONTRACT,
-            abi: NFTStakingContract.abi,
-            functionName: 'getStakeInfo',
-            args: [props.params.id]
-        }
-    )
-    console.log('stakeInfo', stakeInfo)
     const {data: metadata} = useQuery(
         {
             queryKey: ['metadata', props.params.id],
@@ -78,7 +66,7 @@ const Page = (props) => {
                 </div>
                 <div className={'text-center'}>
                     <div>Staking Period</div>
-                    <div>{stakeInfo === undefined ? '-' : stakeInfo[1].toString()}</div>
+                    <div>28 days</div>
                 </div>
                 {!activeStakeButton &&
                   <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light w-2/4 col-start-2'}
@@ -89,9 +77,9 @@ const Page = (props) => {
         </div>
         <div className="flex justify-center w-full frame-36 gap-10 p-10 h-86 bg-[#e4e4e4] my-10">
             <StakeCard onStake={onStake} activeStakeButton={activeStakeButton} stakeSwitch={stakeSwitch}
-                       setStakeSwitch={setStakeSwitch} onChangeDuration={onChangeDuration}/>
+                       setStakeSwitch={setStakeSwitch}/>
             <SummaryCard onStake={onStake} activeStakeButton={activeStakeButton} id={props.params.id}
-                         stakeSwitch={stakeSwitch} duration={duration}/>
+                         stakeSwitch={stakeSwitch}/>
         </div>
 
     </>
@@ -99,7 +87,7 @@ const Page = (props) => {
 
 export default Page;
 
-const SummaryCard = ({activeStakeButton, onStake, id, stakeSwitch, duration}) => {
+const SummaryCard = ({activeStakeButton, onStake, id, stakeSwitch}) => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [modal, setModal] = useState(false);
 
@@ -124,7 +112,7 @@ const SummaryCard = ({activeStakeButton, onStake, id, stakeSwitch, duration}) =>
                   <div>APR</div>
                   <div>100%</div>
                   <div>Stacking Duration</div>
-                  <div>{duration} days</div>
+                  <div>0</div>
                   <div>Transaction fee</div>
                   <div>0.0001 ETH</div>
                 </div>
@@ -188,7 +176,7 @@ const ConfirmationModal = ({modal, onOpen, onOpenChange, loadingTransaction, isS
     </Modal>
 }
 
-const StakeCard = ({onStake, activeStakeButton, stakeSwitch, setStakeSwitch, onChangeDuration}) => {
+const StakeCard = ({onStake, activeStakeButton, stakeSwitch, setStakeSwitch}) => {
     const [collateral, setCollateral] = useState<Asset>(assetsList[0]);
     const [supportingCollateral, setSupportingCollateral] = useState<Asset>(assetsList[1]);
     const [asset, setAsset] = useState<Asset>(assetsList[0]);
@@ -223,7 +211,7 @@ const StakeCard = ({onStake, activeStakeButton, stakeSwitch, setStakeSwitch, onC
                         <div className="text-[#414141] font-['Roboto'] text-sm font-light leading-[120%]">100%</div>
                     </div>
                     <Slider label={'Duration:'} marks={daysMarks} step={7} maxValue={daysMarks[3].value}
-                            minValue={daysMarks[0].value} onValueChange={onChangeDuration}/>
+                            minValue={daysMarks[0].value}/>
                     <div className={'flex justify-center mt-10'}>
                         <button
                             className={`rounded-full px-4 h-10 font-light w-2/4 ${activeStakeButton ? 'bg-[#BEB9B9]' : 'bg-customGreen-50'}`}
