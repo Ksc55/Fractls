@@ -204,17 +204,11 @@ export default function Page() {
                         </div>
                     </div>
                 </div>
-                <section className={'flex gap-5 justify-between my-5'}>
-                    <AddLiquidityCard/>
-                    <AddLiquidityCard/>
+                <section className={'flex gap-5 justify-around my-5'}>
                     <AddLiquidityCard/>
                     <AddLiquidityCard/>
                 </section>
-                <div className="flex  justify-center items-center w-full my-10">
-                    <a className=" justify-center items-center pl-[1.5625rem] pr-[1.5625rem] p-1 rounded-full bg-[#121212] text-[#13ee00] font-['Roboto'] text-2xl leading-[150%]">
-                        View More Pools
-                    </a>
-                </div>
+
                 <div className="flex justify-between">
                     <p className="p">
                         <span className="text-wrapper-13">Stake </span>

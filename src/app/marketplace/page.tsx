@@ -132,7 +132,6 @@ const NFTFractionCard = ({nft, parentNFT}) => {
 
 const CompletedNFTCard = ({nft, index}) => {
     const {data: metadata, isLoading} = useNFT(nft)
-    console.log('metadata', metadata)
     if (metadata) {
         const url = `https://gateway.ipfs.io/ipfs/${metadata.image}/original.png`
 
@@ -143,7 +142,7 @@ const CompletedNFTCard = ({nft, index}) => {
                 <div className={'flex'}>
                 </div>
                 <a href={`/nft/${index}/original/`}
-                   className={'bg-customGreen-50 rounded-full px-4 h-10 font-light text-center align-center'}>
+                   className={'bg-customGreen-50 rounded-full px-4 h-10 font-light text-center align-center cursor-pointer'}>
                     Buy NFT
                 </a>
             </div>
