@@ -36,6 +36,8 @@ export default function Page() {
   const { mutateAsync, isLoading } = useMutation(saveToIpfs);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [modal, setModal] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+
   const { data, isError } = useContractRead({
     address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
     abi: NFTMarketplace.abi,
@@ -90,22 +92,47 @@ export default function Page() {
       return;
     }
 
-    if (!name || !description) return;
-    setModal(true);
-    const response = await mutateAsync({
-      image: selectedImage,
-      name: form.name,
-      description: form.description,
-    });
-    console.log(response);
-    console.log(form.shards.map((shard) => shard.value));
-    const shardPrices = form.shards.map((shard) => shard.value);
+    if (!name || !description) {
+      setMintError("Please fill the form");
+      return;
+    }
 
-    write({
-      args: [response.tokenId, response.tokenURIs, response._ids, shardPrices],
-    });
-    writeNFT({ args: [address, response.original.url] });
+    if (isLoading) {
+      setMessage("Storing your NFT...");
+    } else if (loadingTransaction) {
+      setMessage("Check your Wallet");
+    } else if (isSuccess) {
+      setMessage(null);
+      setMessage("Check on Marketplace");
+    }
+
+    setModal(true);
+    try {
+      const response = await mutateAsync({
+        image: selectedImage,
+        name: form.name,
+        description: form.description,
+      });
+      console.log(response);
+      console.log(form.shards.map((shard) => shard.value));
+      const shardPrices = form.shards.map((shard) => shard.value);
+
+      await write({
+        args: [
+          response.tokenId,
+          response.tokenURIs,
+          response._ids,
+          shardPrices,
+        ],
+      });
+
+      await writeNFT({ args: [address, response.original.url] });
+    } catch (error) {
+      console.error(error);
+      setMintError("Something went wrong");
+    }
   };
+
   if (address === undefined) {
     return (
       <div className={"flex justify-center items-center h-screen"}>
@@ -188,6 +215,12 @@ export default function Page() {
             >
               MINT
             </button>
+
+            {message == "Check on Marketplace" && (
+              <button className="bg-customGreen-50 rounded-full px-4 h-10 font-light w-1/6 ml-4">
+                <a href="/marketplace">Check on Marketplace</a>
+              </button>
+            )}
           </div>
         </>
       )}
