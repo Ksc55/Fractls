@@ -1,0 +1,65 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "checkWinner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "_winnerAddr",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"INFTMarketplace.sol": "INFTMarketplace"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"INFTMarketplace.sol": {
+			"keccak256": "0xa05ba03fb6f593e00b72fc2305a5d2cff3dc0bcdd9025b14196040aeaa5c9889",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a08ecfe6614e0ba680b6b5278848159c187a9d7f2f5d69d9d84e188bacb57d6b",
+				"dweb:/ipfs/QmcUr8JMvsgpLtiHmMMEhy3iLwxCiQ26NTZA9BScah2uyJ"
+			]
+		}
+	},
+	"version": 1
+}
