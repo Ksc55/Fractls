@@ -9,7 +9,7 @@ dotenv.config();
 // Retrieve the NFT Storage API key from environment variables
 const { NFT_STORAGE_API_KEY } = process.env;
 
-// Function to split an image into a 3x3 grid and store each piece as an NFT
+
 
 async function storePuzzleAsset(originalNFT, name ,description) {
     try {
@@ -78,7 +78,7 @@ async function storePuzzleAsset(originalNFT, name ,description) {
         const originalImageMetadata = {
             name,
             description,
-            image: new File([originalNFT], "PuzzleNFT.png", { type: "image/png" }),
+            image: new File([canvas.toBuffer("image/png")], 'original.png', { type: "image/png" }),
             properties: {
                 pieces: puzzlePiecesMetadata.map((pieceMetadata) => pieceMetadata.url),
             },
