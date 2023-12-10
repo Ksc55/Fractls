@@ -56,7 +56,7 @@ function page() {
                                 <button
                                     key={index + 'category'}
                                     onClick={() => changeCategory(category)}
-                                    className={`inline-flex justify-center items-center pr-[1.375rem] py-0 pl-6 rounded-full border border-[#121212] text-[#121212] font-['Roboto'] text-sm leading-[150%] ${category.name === currentCategory.name ? 'bg-white': ''}`}>
+                                    className={`inline-flex justify-center items-center pr-[1.375rem] py-0 pl-6 rounded-full border border-[#121212] text-[#121212] font-['Roboto'] text-sm leading-[150%] ${category.name === currentCategory.name ? 'bg-white' : ''}`}>
                                     <div className="relative leading-[150%]">{category.name}</div>
                                 </button>
                             ))
@@ -74,8 +74,8 @@ function page() {
                       })
                   }
                   {
-                      currentCategory.name === 'Completed' && NFTListMinted.map(_nft => {
-                            return <CompletedNFTCard nft={_nft.result}/>
+                      currentCategory.name === 'Completed' && NFTListMinted.map((_nft, index) => {
+                          return <CompletedNFTCard nft={_nft.result} index={index}/>
                       })
                   }
               </div>
@@ -130,17 +130,23 @@ const NFTFractionCard = ({nft, parentNFT}) => {
     }
 }
 
-const CompletedNFTCard = ({nft}) => {
+const CompletedNFTCard = ({nft, index}) => {
     const {data: metadata, isLoading} = useNFT(nft)
     console.log('metadata', metadata)
     if (metadata) {
         const url = `https://gateway.ipfs.io/ipfs/${metadata.image}/PuzzleNFT.png`
 
         return (
-            <div className="">
-                <Image src={url} width={200} height={200} className={'w-full'}/>
-
-
+            <div className="flex flex-col">
+                {/*<Image src={url} width={200} height={200} className={'w-full'}/>*/}
+                <Image src={'/image-19.png'} width={200} height={200} className={'w-full'}/>
+                <p>{metadata.name}</p>
+                <div className={'flex'}>
+                </div>
+                <a href={`/nft/${index}/original/`}
+                   className={'bg-customGreen-50 rounded-full px-4 h-10 font-light text-center align-center'}>
+                    Buy NFT
+                </a>
             </div>
         )
     }
