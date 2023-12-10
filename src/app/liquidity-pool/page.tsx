@@ -7,7 +7,7 @@ import {Asset, Asset} from "@/interfaces";
 import Slider from "@/components/Slider";
 import Image from "next/image";
 import CuratedNFTCard from "@/components/CuratedNFTCard";
-import {useLatestNFT} from "@/app/hooks";
+import {useLatestMintedNFT, useLatestNFT} from "@/app/hooks";
 import {useContractRead, useContractReads} from "wagmi";
 import NFTContract from "@/app/abi/NFTContract.json";
 
@@ -34,6 +34,8 @@ export default function Page() {
         }))
     })
     console.log('originalNFTDetails', originalNFTDetails)
+    const {data: NFTListMinted = [], isLoading: isLoadingMinted} = useLatestMintedNFT()
+
     return (
         <div className="liquidity-pool mt-20">
             <div className="div w-full">
@@ -80,14 +82,14 @@ export default function Page() {
                     </div>
                 </section>
                 <div className="flex justify-around my-5">
-                    {[1, 2, 3].map(_nft => <CuratedNFTCard/>)}
+                    {NFTListMinted.slice(0,4).map((_nft, index) => <CuratedNFTCard nft={_nft.result} index={index}/>)}
                 </div>
                 <div className="w-full flex justify-center items-center my-20">
                     <a href="your_link_destination" className="">
-                        <div
+                        <a href={'/marketplace'}
                             className="inline-flex justify-center items-center pl-[1.5625rem] pr-[1.5625rem] p-1 rounded-full border border-[#121212] text-[#121212] font-['Roboto'] text-2xl leading-[150%]">
                             View More NFT’s
-                        </div>
+                        </a>
                     </a>
                 </div>
                 <div className="flex justify-between">

@@ -30,7 +30,7 @@ export default function Page() {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [modal, setModal] = useState(false);
     const { data, isError } = useContractRead({
-        address: process.env.NEXT_PUBLIC_CONTRACT,
+        address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
         abi: NFTMarketplace.abi,
         functionName: 'getAllNFTs',
     })
@@ -40,7 +40,7 @@ export default function Page() {
     const {name, description} = form;
     const inValidFrom = !name || !description || form.shards.some(shard => !shard.value);
     const { data: transactionData, isLoading: loadingTransaction, isSuccess, write } = useContractWrite({
-        address: process.env.NEXT_PUBLIC_CONTRACT,
+        address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
         abi: NFTMarketplace.abi,
         functionName: 'createNFT'
     })

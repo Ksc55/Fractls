@@ -92,7 +92,7 @@ const SummaryCard = ({activeStakeButton, onStake, id, stakeSwitch}) => {
     const [modal, setModal] = useState(false);
 
     const {data: transactionData, isLoading: loadingTransaction, isSuccess, write} = useContractWrite({
-        address: process.env.NEXT_PUBLIC_CONTRACT,
+        address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
         abi: NFTStakingContract.abi,
         functionName: 'stakeNFT'
     })

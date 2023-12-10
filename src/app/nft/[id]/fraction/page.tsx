@@ -7,7 +7,7 @@ import { fetchIPFS } from "@/app/marketplace/page";
 
 export default function Page(props) {
   const { data: NFTList = [], isLoading } = useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT,
+    address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
     abi: NFTMarketplace.abi,
     functionName: "getAllNFTs",
   });
@@ -16,7 +16,7 @@ export default function Page(props) {
     contracts: NFTList.flatMap((nft) =>
       nft.partIds.map((id) => {
         return {
-          address: process.env.NEXT_PUBLIC_CONTRACT,
+          address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
           abi: NFTMarketplace.abi,
           functionName: "getPartURI",
           args: [nft.tokenId, id],
@@ -31,7 +31,7 @@ export default function Page(props) {
     isSuccess,
     write,
   } = useContractWrite({
-    address: process.env.NEXT_PUBLIC_CONTRACT,
+    address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
     abi: NFTMarketplace.abi,
     functionName: "createNFT",
   });
@@ -39,7 +39,7 @@ export default function Page(props) {
     write({ args: [] });
   };
   const { data: NFTData, isError } = useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT,
+    address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
     abi: NFTMarketplace.abi,
     functionName: "getPartURI",
     args: [props.searchParams.parent, props.params.id],

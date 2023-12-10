@@ -19,7 +19,7 @@ function page() {
     const [currentCategory, setCurrentCategory] = React.useState(categories[0])
 
     const {data: NFTList = [], isLoading} = useContractRead({
-        address: process.env.NEXT_PUBLIC_CONTRACT,
+        address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
         abi: NFTMarketplace.abi,
         functionName: 'getAllNFTs',
     })
@@ -27,7 +27,7 @@ function page() {
         contracts: NFTList.flatMap(nft =>
             nft.partIds.map(id => {
                     return {
-                        address: process.env.NEXT_PUBLIC_CONTRACT,
+                        address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
                         abi: NFTMarketplace.abi,
                         functionName: 'getPartURI',
                         args: [nft.tokenId, id],
@@ -134,12 +134,11 @@ const CompletedNFTCard = ({nft, index}) => {
     const {data: metadata, isLoading} = useNFT(nft)
     console.log('metadata', metadata)
     if (metadata) {
-        const url = `https://gateway.ipfs.io/ipfs/${metadata.image}/PuzzleNFT.png`
+        const url = `https://gateway.ipfs.io/ipfs/${metadata.image}/original.png`
 
         return (
             <div className="flex flex-col">
-                {/*<Image src={url} width={200} height={200} className={'w-full'}/>*/}
-                <Image src={'/image-19.png'} width={200} height={200} className={'w-full'}/>
+                <Image src={url} width={200} height={200} className={'w-full'}/>
                 <p>{metadata.name}</p>
                 <div className={'flex'}>
                 </div>

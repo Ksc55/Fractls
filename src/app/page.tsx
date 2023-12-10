@@ -81,9 +81,9 @@ export default function Home() {
             </div>
         </section>
         <div className={'flex justify-center mt-10 mb-10'}>
-            <button className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
+            <a href={'/marketplace'} className={'bg-customGreen-50 rounded-full px-4 h-10 font-light'}>
                 View More NFT’s
-            </button>
+            </a>
         </div>
 
             <section className={'flex justify-center gap-14'}>
@@ -114,7 +114,7 @@ export default function Home() {
 
 const RecentlyReconstructed = () => {
     const {data: recentlyAdded = [], isLoading} = useContractRead({
-        address: process.env.NEXT_PUBLIC_CONTRACT,
+        address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
         abi: NFTMarketplace.abi,
         functionName: 'getAllNFTs',
     })
