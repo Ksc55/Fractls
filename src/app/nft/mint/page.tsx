@@ -1,57 +1,64 @@
 "use client";
+// Importing dependencies and components
+import React, { useState } from "react";
+import { useAccount, useContractRead, useContractWrite } from "wagmi";
+import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/modal";
+import { useDisclosure } from "@nextui-org/use-disclosure";
+import { useMutation } from "@tanstack/react-query";
 import ImageUploader from "@/components/ImageUploader";
 import StyledInput from "@/components/InputField";
 import FractionatedNTFFields, {
   Shard,
 } from "@/components/FractionatedNTFFields";
-import { useState } from "react";
-import {
-  useAccount,
-  useContractRead,
-  useContractWrite,
-  usePrepareContractWrite,
-} from "wagmi";
-import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/modal";
-import { useDisclosure } from "@nextui-org/use-disclosure";
-import { useMutation } from "@tanstack/react-query";
 import NFTMarketplace from "../../../NFTMarketplace.json";
 import NFTContract from "@/app/abi/NFTContract.json";
 import { CircularProgress } from "@nextui-org/react";
 
-interface formValues {
+// Defining form values interface
+interface FormValues {
   name: string;
   description: string;
   shards: Shard[];
 }
-const saveToIpfs = async ({ image, name, description }) => {
+
+// Async function to save data to IPFS
+const saveToIpfs = async ({ image, name, description }: any) => {
   const res = await fetch("/nft/upload", {
     method: "POST",
     body: JSON.stringify({ image, name, description }),
   });
   return await res.json();
 };
+
+// Main component function
 export default function Page() {
   const { address } = useAccount();
+  const [modal, setModal] = useState(false);
 
+  // Hooks for handling image upload and form modal
   const { mutateAsync, isLoading } = useMutation(saveToIpfs);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [modal, setModal] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
 
+  // Hooks for handling contract data and errors
   const { data, isError } = useContractRead({
     address: process.env.NEXT_PUBLIC_MARKET_CONTRACT,
     abi: NFTMarketplace.abi,
     functionName: "getAllNFTs",
   });
-  console.log(data);
+
+  // Hooks for handling selected image and form data
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [form, setForm] = useState<formValues>({
+  const [form, setForm] = useState<FormValues>({
     name: "",
     description: "",
     shards: [],
   });
+
+  // Destructuring form values
   const { name, description } = form;
-  const inValidFrom =
+
+  // Validation for minting
+  const isFormInvalid =
     !name ||
     !description ||
     form.shards.length !== 9 ||
@@ -59,8 +66,12 @@ export default function Page() {
       (shard) =>
         shard.value === null || shard.value === "" || shard.value === "0"
     );
-  const [mintError, setMintError] = useState<string | null>(null);
 
+  // Hooks for handling minting errors and messages
+  const [mintError, setMintError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+  // Hooks for handling contract transactions
   const {
     data: transactionData,
     isLoading: loadingTransaction,
@@ -71,22 +82,31 @@ export default function Page() {
     abi: NFTMarketplace.abi,
     functionName: "createNFT",
   });
+
+  // Hooks for handling NFT contract transactions
   const { write: writeNFT } = useContractWrite({
     address: process.env.NEXT_PUBLIC_NFT_CONTRACT,
     abi: NFTContract.abi,
     functionName: "mint",
   });
+
+  // Function to handle form field changes
   const onChangeField = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
+  // Function to handle shard changes
   const onChangeShards = (shards: Shard[]) => {
     setForm({ ...form, shards });
   };
+
+  // Function to mint tokens
   const mintTokens = async () => {
     if (!selectedImage) {
       setMintError("Please upload an image");
       return;
     }
+
     if (form.shards.length === 0) {
       setMintError("Please fractionate the NFT");
       return;
@@ -97,42 +117,30 @@ export default function Page() {
       return;
     }
 
-    if (isLoading) {
-      setMessage("Storing your NFT...");
-    } else if (loadingTransaction) {
-      setMessage("Check your Wallet");
-    } else if (isSuccess) {
-      setMessage(null);
-      setMessage("Check on Marketplace");
-    }
-
     setModal(true);
+
     try {
+      console.log(form.shards.map((shard) => shard.value));
       const response = await mutateAsync({
         image: selectedImage,
         name: form.name,
         description: form.description,
       });
-      console.log(response);
-      console.log(form.shards.map((shard) => shard.value));
-      const shardPrices = form.shards.map((shard) => shard.value);
 
-      await write({
-        args: [
-          response.tokenId,
-          response.tokenURIs,
-          response._ids,
-          shardPrices,
-        ],
+      write({
+        args: [response.tokenId, response.tokenURIs, response._ids],
       });
 
-      await writeNFT({ args: [address, response.original.url] });
+      // writeNFT({ args: [address, response.original.url] });
+
+      setMessage(isLoading ? "Storing your NFT..." : "Check on Marketplace");
     } catch (error) {
       console.error(error);
       setMintError("Something went wrong");
     }
   };
 
+  // Render content based on user's wallet connection
   if (address === undefined) {
     return (
       <div className={"flex justify-center items-center h-screen"}>
@@ -140,6 +148,8 @@ export default function Page() {
       </div>
     );
   }
+
+  // Render main content
   return (
     <>
       <Modal
@@ -180,6 +190,7 @@ export default function Page() {
       <div className="flex justify-center items-center bg-customGray-50 h-96 mt-10">
         <ImageUploader {...{ selectedImage, setSelectedImage }} />
       </div>
+
       <div className="flex justify-between mt-10 gap-4">
         <StyledInput
           placeholder="Name of the NFT"
@@ -194,6 +205,7 @@ export default function Page() {
           name={"description"}
         />
       </div>
+
       {selectedImage && (
         <>
           <p className="text-center text-2xl font-bold my-10">
@@ -203,20 +215,22 @@ export default function Page() {
             image={selectedImage}
             setValue={onChangeShards}
           />
+
           <div className={"flex justify-center mt-10 "}>
             {mintError && (
               <p className="text-red-500 text-sm mb-4">{mintError}</p>
             )}
+
             <button
               onClick={mintTokens}
-              disabled={inValidFrom}
+              disabled={isFormInvalid}
               className={`bg-customGreen-50 rounded-full px-4 h-10 font-light w-1/6 
-                    ${inValidFrom ? "opacity-50 cursor-not-allowed" : ""}`}
+                    ${isFormInvalid ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               MINT
             </button>
 
-            {message == "Check on Marketplace" && (
+            {message === "Check on Marketplace" && (
               <button className="bg-customGreen-50 rounded-full px-4 h-10 font-light w-1/6 ml-4">
                 <a href="/marketplace">Check on Marketplace</a>
               </button>
