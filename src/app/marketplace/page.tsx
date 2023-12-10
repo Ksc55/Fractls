@@ -6,30 +6,26 @@ import {useIsMounted} from "@/components/useIsMounted";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 import {CircularProgress} from "@nextui-org/progress";
+import {useLatestMintedNFT, useNFT} from "@/app/hooks";
 
 function page() {
     const mounted = useIsMounted()
     const categories = [
         {
-            name: "Pop Art",
+            name: "Fragments",
         },
-        {name: 'Cubism'},
-        {name: 'Abstract'},
-        {name: 'Minimalism'},
-        {name: 'Modern Art'},
-        {name: 'Surrealism'},
-        {name: 'Contemporary'}
+        {name: 'Completed'}
     ];
+    const [currentCategory, setCurrentCategory] = React.useState(categories[0])
+
     const {data: NFTList = [], isLoading} = useContractRead({
         address: process.env.NEXT_PUBLIC_CONTRACT,
         abi: NFTMarketplace.abi,
         functionName: 'getAllNFTs',
     })
-
     const {data: NFTFractions = [], isError} = useContractReads({
         contracts: NFTList.flatMap(nft =>
             nft.partIds.map(id => {
-                    console.log(nft.tokenId.toString(), id)
                     return {
                         address: process.env.NEXT_PUBLIC_CONTRACT,
                         abi: NFTMarketplace.abi,
@@ -40,6 +36,13 @@ function page() {
             )
         ),
     })
+
+
+    //get minted NFTs
+    const {data: NFTListMinted = [], isLoading: isLoadingMinted} = useLatestMintedNFT()
+    const changeCategory = (category) => {
+        setCurrentCategory(category)
+    }
     return (
         <div
             className="relative bg-whitesmoke w-full overflow-hidden flex flex-col items-start justify-end pt-10 pb-[572px] box-border gap-[28px] text-left text-sm text-gray font-roboto">
@@ -50,11 +53,12 @@ function page() {
                         className="w-full h-5 flex flex-row items-center  justify-around">
                         {
                             categories.map((category, index) => (
-                                <div
+                                <button
                                     key={index + 'category'}
-                                    className="inline-flex justify-center items-center pr-[1.375rem] py-0 pl-6 rounded-full border border-[#121212] text-[#121212] font-['Roboto'] text-sm leading-[150%]">
+                                    onClick={() => changeCategory(category)}
+                                    className={`inline-flex justify-center items-center pr-[1.375rem] py-0 pl-6 rounded-full border border-[#121212] text-[#121212] font-['Roboto'] text-sm leading-[150%] ${category.name === currentCategory.name ? 'bg-white': ''}`}>
                                     <div className="relative leading-[150%]">{category.name}</div>
-                                </div>
+                                </button>
                             ))
                         }
                     </div>
@@ -64,9 +68,14 @@ function page() {
                 (!isLoading && mounted) &&
               <div className="grid grid-cols-5 gap-10 w-full justify-center">
                   {
-                      NFTFractions.map(_nft => {
+                      currentCategory.name === 'Fragments' && NFTFractions.map(_nft => {
                           const parentNFT = NFTList.find(nft => nft.partIds.includes(_nft.result.id)).tokenId;
                           return <NFTFractionCard nft={_nft} parentNFT={parentNFT}/>
+                      })
+                  }
+                  {
+                      currentCategory.name === 'Completed' && NFTListMinted.map(_nft => {
+                            return <CompletedNFTCard nft={_nft.result}/>
                       })
                   }
               </div>
@@ -118,6 +127,22 @@ const NFTFractionCard = ({nft, parentNFT}) => {
             className="">
             <CircularProgress color="secondary" aria-label="Loading..."/>
         </div>
+    }
+}
+
+const CompletedNFTCard = ({nft}) => {
+    const {data: metadata, isLoading} = useNFT(nft)
+    console.log('metadata', metadata)
+    if (metadata) {
+        const url = `https://gateway.ipfs.io/ipfs/${metadata.image}/PuzzleNFT.png`
+
+        return (
+            <div className="">
+                <Image src={url} width={200} height={200} className={'w-full'}/>
+
+
+            </div>
+        )
     }
 
 }
