@@ -5,7 +5,7 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { polygonMumbai } from "viem/chains";
+import {polygon, polygonMumbai, polygonZkEvm, polygonZkEvmTestnet} from "viem/chains";
 import { NextUIProvider } from "@nextui-org/system";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { QueryClient } from "@tanstack/query-core";
@@ -14,7 +14,7 @@ import { MessagesProvider } from "@/context/messages";
 import { FC, ReactNode } from "react";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [polygonMumbai],
+  [polygonMumbai, polygon, polygonMumbai, polygonZkEvmTestnet, polygonZkEvm],
   [
     alchemyProvider({ apiKey: "0Z8bgqW0ESlNsj7Zl7GoLtzL9yVhwqmh" }),
     publicProvider(),
