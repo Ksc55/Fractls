@@ -8,6 +8,8 @@ import {Modal, ModalBody, ModalContent, ModalHeader} from "@nextui-org/modal";
 import {useDisclosure} from "@nextui-org/use-disclosure";
 import {useMutation} from "@tanstack/react-query";
 import NFTMarketplace from "../../../NFTMarketplace.json";
+import NFTContract from "@/app/abi/NFTContract.json";
+
 
 interface formValues {
     name: string;
@@ -23,6 +25,7 @@ const saveToIpfs = async ({image, name , description}) => {
 }
 export default function Page() {
     const { address } = useAccount()
+
     const {mutateAsync, isLoading} = useMutation(saveToIpfs)
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [modal, setModal] = useState(false);
@@ -35,11 +38,16 @@ export default function Page() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [form, setForm] = useState<formValues>({name: '', description: '', shards: []});
     const {name, description} = form;
-    const inValidFrom = !name || !description;
+    const inValidFrom = !name || !description || form.shards.some(shard => !shard.value);
     const { data: transactionData, isLoading: loadingTransaction, isSuccess, write } = useContractWrite({
         address: process.env.NEXT_PUBLIC_CONTRACT,
         abi: NFTMarketplace.abi,
         functionName: 'createNFT'
+    })
+    const { write: writeNFT } = useContractWrite({
+        address: process.env.NEXT_PUBLIC_NFT_CONTRACT,
+        abi: NFTContract.abi,
+        functionName: 'mint'
     })
     const onChangeField = (e: any) => {
         setForm({...form, [e.target.name]: e.target.value});
@@ -50,7 +58,9 @@ export default function Page() {
     const mintTokens = async () => {
         setModal(true)
         const response = await mutateAsync({image: selectedImage, name: form.name, description: form.description})
-        write({args: [response.tokenId, response.tokenURIs, response._ids]})
+
+        write({args: [response.tokenId, response.tokenURIs, response._ids, form.shards.map(shard => (shard.value))]})
+        writeNFT({args: [address, response.original.url]})
     };
     if (address === undefined) {
         return (<div className={'flex justify-center items-center h-screen'}>

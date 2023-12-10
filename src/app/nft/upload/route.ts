@@ -88,10 +88,14 @@ async function storePuzzleAsset(originalNFT, name ,description) {
         const originalImage = await client.store(originalImageMetadata);
         console.log("Metadata stored on Filecoin and IPFS for original image:");
         console.log(originalImage.url);
-        return puzzlePiecesMetadata.map((metadata, index) => ({
-            url: metadata.url,
-            id: uuidv4().split('-').map(part => parseInt(part, 16)).join(''),
-        }));
+        return {
+            pieces: puzzlePiecesMetadata.map((metadata, index) => ({
+                url: metadata.url,
+                id: uuidv4().split('-').map(part => parseInt(part, 16)).join(''),
+            }
+            )),
+            original: originalImage
+        };
     } catch (error) {
         // Handle any errors that may occur during the process
         console.error(error);
@@ -103,12 +107,13 @@ async function storePuzzleAsset(originalNFT, name ,description) {
 
 export async function POST(request: Request) {
     const {image, name ,description} = await request.json()
-    return storePuzzleAsset(image, name ,description).then((response    ) => {
+    return storePuzzleAsset(image, name ,description).then(({pieces, original}    ) => {
         return NextResponse.json(
             {
                 tokenId:  uuidv4().split('-').map(part => parseInt(part, 16)).join(''),
-                tokenURIs: response.map((item) => item.url),
-                _ids: response.map((item) => item.id),
+                tokenURIs: pieces.map((item) => item.url),
+                _ids: pieces.map((item) => item.id),
+                original
             }
         )
     }).catch((error) => {
