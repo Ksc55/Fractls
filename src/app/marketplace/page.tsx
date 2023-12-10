@@ -145,24 +145,45 @@ const CompletedNFTCard = ({ nft, index }) => {
     const url = `https://gateway.ipfs.io/ipfs/${metadata.image}/original.png`;
 
     return (
-      <div className="flex flex-col">
-        <Image
-          src={url}
-          width={200}
-          height={200}
-          className={"w-full"}
-          alt={metadata.name}
-        />
-        <p>{metadata.name}</p>
-        <div className="flex justify-center p-3">
-          <a
-            href={`/nft/${index}/original/`}
-            className="bg-customGreen-50 rounded-full px-4 h-10 flex items-center justify-center font-light cursor-pointer"
-          >
-            Buy NFT
-          </a>
+      <div className="border rounded-md overflow-hidden shadow-md">
+        <div className="relative aspect-w-1 aspect-h-1">
+          <Image
+            src={url}
+            width={200}
+            height={200}
+            className={"w-full"}
+            alt={metadata.name}
+          />
+        </div>
+        <div className="p-4">
+          <p className="font-semibold text-base text-gray-800">
+            {metadata.name}
+          </p>
+          <div className="flex justify-center mt-3">
+            <a
+              href={`/nft/${index}/original/`}
+              className="bg-customGreen-50 rounded-full px-4 h-10 flex items-center justify-center font-light cursor-pointer"
+            >
+              Buy NFT
+            </a>
+          </div>
         </div>
       </div>
+
+      // <div className="flex flex-col">
+
+      //   <p className="font-semibold text-sm" style={{ color: "#121212" }}>
+      //     {metadata.name}
+      //   </p>
+      //   <div className="flex justify-center p-3">
+      //     <a
+      //       href={`/nft/${index}/original/`}
+      //       className="bg-customGreen-50 rounded-full px-4 h-10 flex items-center justify-center font-light cursor-pointer"
+      //     >
+      //       Buy NFT
+      //     </a>
+      //   </div>
+      // </div>
     );
   }
 };
